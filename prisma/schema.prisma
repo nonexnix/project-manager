@@ -1,12 +1,10 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -72,7 +70,7 @@ model Project {
 model Ticket {
   id        String  @id @default(cuid())
   code      String
-  token     Token
+  token     String
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -136,7 +134,7 @@ model Message {
 
 model Reaction {
   id        String  @id @default(cuid())
-  emoji     Emoji   @default(LIKE)
+  emoji     String  @default("LIKE")
   member    Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
   memberId  String
   message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
@@ -150,7 +148,7 @@ model Task {
   name         String
   description  String
   rate         Int           @default(10)
-  priority     Priority      @default(MEDIUM)
+  priority     String        @default("MEDIUM")
   over         Boolean       @default(false)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -167,7 +165,7 @@ model Todo {
   id           String        @id @default(cuid())
   name         String
   description  String
-  priority     Priority      @default(MEDIUM)
+  priority     String        @default("MEDIUM")
   over         Boolean       @default(false)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -184,7 +182,7 @@ model Suggestion {
   name         String
   description  String
   rate         Int           @default(5)
-  status       Status        @default(PENDING)
+  status       String        @default("PENDING")
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   member       Member        @relation(fields: [memberId], references: [id], onDelete: Cascade)
@@ -197,7 +195,7 @@ model Suggestion {
 
 model Vote {
   id           String     @id @default(cuid())
-  mark         Mark
+  mark         String
   member       Member     @relation(fields: [memberId], references: [id])
   memberId     String
   suggestion   Suggestion @relation(fields: [suggestionId], references: [id])
@@ -213,7 +211,7 @@ model File {
   extension    String
   path         String
   rate         Int           @default(5)
-  status       Status        @default(PENDING)
+  status       String        @default("PENDING")
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   member       Member        @relation(fields: [memberId], references: [id], onDelete: Cascade)
@@ -259,35 +257,35 @@ model Participant {
   @@unique([memberId, announcementId])
 }
 
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
-}
+// enum Priority {
+//   LOW
+//   MEDIUM
+//   HIGH
+// }
 
-enum Status {
-  PENDING
-  APPROVED
-  DECLINED
-}
+// enum Status {
+//   PENDING
+//   APPROVED
+//   DECLINED
+// }
 
-enum Emoji {
-  LIKE
-  LOVE
-  HATE
-  LAUGH
-  CRY
-  HAPPY
-  SAD
-}
+// enum Emoji {
+//   LIKE
+//   LOVE
+//   HATE
+//   LAUGH
+//   CRY
+//   HAPPY
+//   SAD
+// }
 
-enum Mark {
-  POSITIVE
-  NEGATIVE
-  NEUTRAL
-}
+// enum Mark {
+//   POSITIVE
+//   NEGATIVE
+//   NEUTRAL
+// }
 
-enum Token {
-  REQUEST
-  INVITE
-}
+// enum Token {
+//   REQUEST
+//   INVITE
+// }
