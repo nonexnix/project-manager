@@ -7,8 +7,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        primary: ['Roboto', 'sans-serif'],
+        primary: ['Inter', 'sans-serif'],
       },
+      colors: {
+        'violet': '#EFECFC',
+        'snow': '#F6F8FC',
+        'blue': '#6AC0DC',
+        'pink': '#E30071',
+        'typography': '#2F2F2F'
+      }
     },
   },
   plugins: [],
