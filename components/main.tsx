@@ -5,7 +5,7 @@ interface IProps {
 const Main = ({ children }: IProps) => {
   return (
     <main>
-      <div className="area">{children}</div>
+      <div className="area mt-10">{children}</div>
     </main>
   )
 }
