@@ -1,5 +1,5 @@
 import type { IMember, IMessage, IProject, IUser } from '../../schemas/interfaces'
-import type { TEmoji, TMark, TPriority } from '../../schemas/types'
+import type { TEmoji, TMark, TPriority, TStatus } from '../../schemas/types'
 
 interface IUseClientStore {
   user: IUser
@@ -80,8 +80,16 @@ interface IDelete {
   user: (payload: { id: string }) => void
   member: (payload: { id: string }) => void
   project: (payload: { id: string }) => void
+  role: (payload: { id: string }) => void
+  authorization: (payload: { id: string }) => void
   message: (payload: { id: string }) => void
+  reaction: (payload: { id: string }) => void
   task: (payload: { id: string }) => void
+  todo: (payload: { id: string }) => void
+  suggestion: (payload: { id: string }) => void
+  vote: (payload: { id: string }) => void
+  file: (payload: { id: string }) => void
+  announcement: (payload: { id: string }) => void
   participant: (payload: { id: string }) => void
   ticket: (payload: { id: string }) => void
 }
@@ -103,6 +111,10 @@ interface IUpdate {
     preserve: (payload: { id: string; key: 'preserve'; value: boolean }) => void
     dueAt: (payload: { id: string; key: 'dueAt'; value: string }) => void
   }
+  role: {
+    name: (payload: { id: string; key: 'name'; value: string }) => void
+    description: (payload: { id: string; key: 'description'; value: string }) => void
+  }
   message: {
     text: (payload: { id: string; key: 'text'; value: string }) => void
   }
@@ -111,6 +123,34 @@ interface IUpdate {
     description: (payload: { id: string; key: 'description'; value: string }) => void
     priority: (payload: { id: string; key: 'priority'; value: TPriority }) => void
     over: (payload: { id: string; key: 'over'; value: boolean }) => void
+    dueAt: (payload: { id: string; key: 'dueAt'; value: string }) => void
+  }
+  todo: {
+    name: (payload: { id: string; key: 'name'; value: string }) => void
+    description: (payload: { id: string; key: 'description'; value: string }) => void
+    priority: (payload: { id: string; key: 'priority'; value: TPriority }) => void
+    over: (payload: { id: string; key: 'over'; value: boolean }) => void
+    dueAt: (payload: { id: string; key: 'dueAt'; value: string }) => void
+  }
+  suggestion: {
+    name: (payload: { id: string; key: 'name'; value: string }) => void
+    description: (payload: { id: string; key: 'description'; value: string }) => void
+    status: (payload: { id: string; key: 'status'; value: TStatus }) => void
+  }
+  vote: {
+    mark: (payload: { id: string; key: 'mark'; value: TMark }) => void
+  }
+  file: {
+    name: (payload: { id: string; key: 'name'; value: string }) => void
+    description: (payload: { id: string; key: 'description'; value: string }) => void
+    status: (payload: { id: string; key: 'status'; value: TStatus }) => void
+  }
+  announcement: {
+    name: (payload: { id: string; key: 'name'; value: string }) => void
+    description: (payload: { id: string; key: 'description'; value: string }) => void
+  }
+  participant: {
+    access: (payload: { id: string; key: 'access'; value: boolean }) => void
   }
 }
 

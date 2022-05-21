@@ -5,16 +5,11 @@ import prisma from '../../../library/utilities/prisma'
 type THandler = (request: NextApiRequest, response: NextApiResponse) => void
 
 const handler: THandler = async (request, response) => {
-  if (request.method === 'POST') {
+  if (request.method === 'DELETE') {
     const body = JSON.parse(request.body)
     try {
-      const member = await prisma.member.findUnique({
-        where: { id: String(body!.id) },
-        include: {
-          user: true,
-        },
-      })
-      response.status(200).json(member)
+      await prisma.suggestion.delete({ where: { id: body.id } })
+      response.status(200).json(postman(200))
     } catch (error) {
       console.error(error)
       response.status(500).json(postman(500))
