@@ -1,27 +1,37 @@
-import Link from 'next/link'
-import useClientStore from '../library/stores/client'
 import { MenuIcon } from '@heroicons/react/outline'
 import Icon from './icon/icon'
 import Linker from './link/link'
 import { useState } from 'react'
 import Button from './button/button'
 
-const Header = () => {
-  const user = useClientStore((state) => state.user)
+interface IProps {
+  firstName:string
+  lastName:string
+}
+
+const Header = ({firstName, lastName} : IProps) => {
   const [open, setOpen] = useState(false)
 
   return (
     <header>
       <div className="area bg-white shadow-md shadow-violet grid grid-flow-col items-center">
+        {/* title */}
         <h1 className="font-bold text-blue text-sm md:text-lg whitespace-nowrap">
           PCU Teams
         </h1>
 
         <div className="ml-auto md:hidden">
           <div className="relative grid grid-flow-col items-center gap-6">
+            {/* name */}
+            <h1 className='text-sm text-blue font-semibold'>Hi! <span className="font-bold">{firstName} {lastName}</span></h1>
+            
+            {/* profile */}
             <div className="w-10 h-10 border-[1px] border-gray-200 rounded-full grid items-center justify-center">
               <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
             </div>
+
+
+            {/* logout */}
             <button onClick={() => setOpen(!open)}>
               <Icon icon={<MenuIcon />} />
             </button>
@@ -46,16 +56,16 @@ const Header = () => {
               <div className="absolute w-0 h-1 bg-blue group-hover:w-full transition-all duration-500 ease-in-out"></div>
             </div>
 
-            <div className="grid items-center grid-flow-col gap-3">
-              <h1 className="font-bold text-blue text-sm md:text-md cursor-pointer whitespace-nowrap">
-                Hi! {user.firstName} {user.lastName}
-              </h1>
-              <div className="w-10 h-10 border-[1px] border-gray-200 rounded-full grid items-center justify-center">
-                <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
-              </div>
+            {/* name */}
+            <h1 className='text-sm text-blue font-semibold'>Hi! <span className="font-bold">{firstName} {lastName}</span></h1>
+
+            {/* user profile */}
+            <div className="w-10 h-10 border-[1px] border-gray-200 rounded-full grid items-center justify-center">
+              <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
             </div>
 
-            <Button name={'Logout'} color={'pink'}/>
+            
+            <Button name={'Logout'} color={'bg-pink'}/>
           </div>
         </div>
       </div>
