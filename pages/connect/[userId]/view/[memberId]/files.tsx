@@ -6,7 +6,6 @@ import Header from '../../../../../components/header'
 import Icon from '../../../../../components/icon/icon'
 import Layout from '../../../../../components/layout'
 import Main from '../../../../../components/main'
-import Member from '../../../../../components/members/member'
 import useClientStore from '../../../../../library/stores/client'
 import objectified from '../../../../../library/utilities/objectified'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
@@ -14,7 +13,6 @@ import { IMember, IProject, IUser } from '../../../../../library/schemas/interfa
 import { useEffect, useState } from 'react'
 import Sidebar from '../../../../../components/sidebar/sidebar'
 import File from '../../../../../components/file/file'
-import phase from '../../../../../library/utilities/phase'
 
 interface IProps {
   initialUser: IUser
@@ -38,7 +36,6 @@ const Files: NextPage<IProps> = ({ initialUser, initialMember, initialProject })
 
   if (!ready) return <></>
 
-  console.log(user)
   return (
     <Foundation title="Project Files">
       <Layout>
@@ -79,14 +76,7 @@ const Files: NextPage<IProps> = ({ initialUser, initialMember, initialProject })
 
               {/* project members */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-                {project?.files?.map((file) => (
-                  <File
-                    key={file.id}
-                    name={file.name}
-                    extension={file.extension}
-                    date={String(phase(file.createdAt))}
-                  />
-                ))}
+                <File/>
               </div>
             </div>
           </section>
