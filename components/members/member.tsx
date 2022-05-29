@@ -12,9 +12,11 @@ import useClientStore from '../../library/stores/client'
 interface IProps {
   user:IUser
   project: IProject
+  memberId:string
 }
-const Member = ({user, project}: IProps) => {
+const Member = ({user, project, memberId}: IProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const kickMember = useClientStore((state) => state.update.member.active)
   
   return (
     <div className='bg-white shadow-md shadow-violet grid gap-5 hover:-translate-y-2 transition-all duration-500 px-5 py-4'>
@@ -56,11 +58,13 @@ const Member = ({user, project}: IProps) => {
                       />
 
                       {/* Kick Member */}
-                      <Linker
-                        name={'Kick Member'}
-                        link={'#'}
-                        style={'py-4 px-8 hover:bg-snow transition-all duration-300'}
-                      />
+                      <button onClick={() => kickMember({id:memberId, key:"active", value:false})}>
+                        <Linker
+                          name={'Kick Member'}
+                          link={'#'}
+                          style={'py-4 px-8 hover:bg-snow transition-all duration-300'}
+                        />
+                      </button>
                     </div>
                   }
                 </div>

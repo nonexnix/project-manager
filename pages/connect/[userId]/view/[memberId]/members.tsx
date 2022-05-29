@@ -92,7 +92,7 @@ const Members: NextPage<IProps> = ({
                 {project?.members
                   ?.filter(({ active }) => active)
                   .map((member) => (
-                    <Member key={member?.id} user={user} project={project} />
+                    <Member key={member.id} user={user} project={project}memberId={member.id}/>
                   ))}
               </div>
             </div>
