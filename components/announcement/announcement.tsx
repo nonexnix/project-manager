@@ -19,7 +19,7 @@ const Announcement = ({name, description, id, date} : IProps) => {
         <div className='grid grid-cols-[1fr,auto] items-center'>
           {/* name and date */}
           <div className="grid gap-1">
-            <h1 className='font-semibold'>{name}</h1>
+            <h1 className='font-semibold text-lg'>{name}</h1>
             <h2 className='text-xs text-gray-500 tracking-wider'>{date}</h2>
           </div>
 
