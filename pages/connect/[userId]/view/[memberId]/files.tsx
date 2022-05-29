@@ -1,6 +1,7 @@
 import { MenuAlt1Icon, SearchIcon } from '@heroicons/react/outline'
 import prisma from '../../../../../library/utilities/prisma'
 import WhiteCard from '../../../../../components/card/white-card'
+import SnowCard from '../../../../../components/card/snow-card'
 import Foundation from '../../../../../components/foundation'
 import Header from '../../../../../components/header'
 import Icon from '../../../../../components/icon/icon'
@@ -9,10 +10,16 @@ import Main from '../../../../../components/main'
 import useClientStore from '../../../../../library/stores/client'
 import objectified from '../../../../../library/utilities/objectified'
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import { IMember, IProject, IUser } from '../../../../../library/schemas/interfaces'
+import {
+  IMember,
+  IProject,
+  IUser,
+} from '../../../../../library/schemas/interfaces'
 import { useEffect, useState } from 'react'
 import Sidebar from '../../../../../components/sidebar/sidebar'
 import File from '../../../../../components/file/file'
+import Button from '../../../../../components/button/button'
+import SubmitFile from '../../../../../components/modals/submit-file'
 
 interface IProps {
   initialUser: IUser
@@ -20,9 +27,14 @@ interface IProps {
   initialMember: IMember
 }
 
-const Files: NextPage<IProps> = ({ initialUser, initialMember, initialProject }) => {
+const Files: NextPage<IProps> = ({
+  initialUser,
+  initialMember,
+  initialProject,
+}) => {
   const [ready, setReady] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [isSubmit, setIsSubmit] = useState(false)
   const user = useClientStore((state) => state.user)
   const project = useClientStore((state) => state.project)
   const member = useClientStore((state) => state.member)
@@ -47,8 +59,9 @@ const Files: NextPage<IProps> = ({ initialUser, initialMember, initialProject })
           <section>
             <div className="grid gap-10">
               {/* Search */}
+
               <WhiteCard>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mb-14">
                   <Icon icon={<SearchIcon />} />
                   <input
                     type="string"
@@ -56,6 +69,12 @@ const Files: NextPage<IProps> = ({ initialUser, initialMember, initialProject })
                     placeholder="Search Files"
                   />
                 </div>
+                <SnowCard>
+                  <div className='grid place-items-end'>
+                    <Button name={'Submit File'} color={'bg-pink'} handler={() => setIsSubmit(!isSubmit)} />
+                    {isSubmit && <SubmitFile memberId={member.id} projectId={project.id} handler={() => setIsSubmit(false)}/>}
+                  </div>
+                </SnowCard>
               </WhiteCard>
 
               {/* sidebar */}
@@ -76,7 +95,7 @@ const Files: NextPage<IProps> = ({ initialUser, initialMember, initialProject })
 
               {/* project members */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-                <File/>
+                <File />
               </div>
             </div>
           </section>
