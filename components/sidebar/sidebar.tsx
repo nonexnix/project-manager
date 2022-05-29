@@ -25,6 +25,15 @@ const Sidebar = ({userId, memberId}:IProps) => {
           'py-4 px-16 hover:bg-snow transition-all duration-300'
         }
       />
+      {/* join requests */}
+      <Linker
+        name={'Join Requests'}
+        link={`/connect/${userId}/view/${memberId}/requests`}
+        style={
+          'py-4 px-16 hover:bg-snow transition-all duration-300'
+        }
+      />
+
       {/* files */}
       <Linker
         name={'Files'}
