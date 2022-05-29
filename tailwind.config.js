@@ -14,7 +14,8 @@ module.exports = {
         'snow': '#F6F8FC',
         'blue': '#6AC0DC',
         'pink': '#E30071',
-        'typography': '#2F2F2F'
+        'typography': '#2F2F2F',
+        'hotpink':'#E30071'
       }
     },
   },
