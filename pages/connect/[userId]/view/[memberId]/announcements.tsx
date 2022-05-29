@@ -17,6 +17,8 @@ import Announcement from '../../../../../components/announcement/announcement'
 import { MenuAlt1Icon } from '@heroicons/react/outline'
 import Icon from '../../../../../components/icon/icon'
 import Sidebar from '../../../../../components/sidebar/sidebar'
+import PostAnnouncement from '../../../../../components/modals/post-announcement'
+import phase from '../../../../../library/utilities/phase'
 
 interface IProps {
   initialUser: IUser
@@ -34,6 +36,7 @@ const Announcements: NextPage<IProps> = ({
   const project = useClientStore((state) => state.project)
   const member = useClientStore((state) => state.member)
   const [isOpen, setIsOpen] = useState(false)
+  const [isPost, setIsPost] = useState(false)
 
 
   useEffect(() => {
@@ -70,15 +73,14 @@ const Announcements: NextPage<IProps> = ({
                 </div>
 
                 {/* post button */}
-                <button>
-                  <Button name={"Post Announcement"} color={'bg-pink'}/>
-                </button>
+                <Button name={"Post Announcement"} color={'bg-pink'} handler={() => setIsPost(!isPost)}/>
+                {isPost && <PostAnnouncement memberId={member.id} projectId={project.id} handler={() => setIsPost(false)}/>}
               </div>
 
               {/* announcements */}
               <div className='h-full grid gap-3'>
                 {project?.announcements?.map((announcement) => (
-                  <Announcement key={announcement.id} name={announcement.name} description={announcement.description}/>
+                  <Announcement key={announcement.id} name={announcement.name} description={announcement.description} id={announcement.id} date={String(phase(announcement.createdAt, 'LL'))}/>
                 ))}
               </div>
             </div>
