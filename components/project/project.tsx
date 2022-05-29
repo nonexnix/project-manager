@@ -20,14 +20,9 @@ const Project = ({ member }: IProps) => {
       <div className="lg:w-[500px] cursor-pointer hover:-translate-y-2 transiton-all duration-500">
         <WhiteCard>
           <div className="grid gap-4">
-            {/* name and due date */}
-            <div className="grid gap-1">
-              <div className="text-md md:text-xl leading-relaxed font-semibold">
-                {member?.project?.name}
-              </div>
-              <div className="text-sm leading-relaxed">
-                {String(phase(member?.project?.dueAt!, 'LL'))}
-              </div>
+            {/* name */}
+            <div className="text-md md:text-xl leading-relaxed font-semibold">
+              {member?.project?.name}
             </div>
 
             {/* projectmember members */}
@@ -43,7 +38,7 @@ const Project = ({ member }: IProps) => {
             </div>
 
             {/* user's contribution */}
-            <div className="grid grid-flow-col items-center mb-16">
+            <div className="grid grid-flow-col items-center mb-12">
               <IconLabel
                 icon={<CollectionIcon />}
                 label={member?.project?.files?.length}
@@ -64,15 +59,22 @@ const Project = ({ member }: IProps) => {
           </div>
 
           <SnowCard>
-            {/* progress bar */}
-            <div>
-              <div className="grid grid-flow-col items-center">
-                <h1 className="text-xs text-gray-500">Completeness</h1>
-                <h1 className="text-xs text-gray-500 ml-auto">60%</h1>
+            <div className="grid grid-cols-[1fr,auto] items-center">
+              {/* start and due date */}
+              <div className="text-sm tracking-wide">
+                {String(phase(member!.project!.createdAt, 'LL'))} -{' '}
+                {String(phase(member!.project!.dueAt, 'LL'))}
               </div>
-              <div className="relative w-full h-4 mt-1 border-[1px] border-gray-200 rounded-full">
-                <div className="absolute left-0 top-0 w-[60%] h-full bg-green-500 rounded-full"></div>
-              </div>
+              {/* completeness */}
+              {member.project?.over === true ? (
+                <h1 className="text-green-600 font-bold tracking-wide">
+                  Completed
+                </h1>
+              ) : (
+                <h1 className="text-red-600 font-bold tracking-wide">
+                  Incomplete
+                </h1>
+              )}
             </div>
           </SnowCard>
         </WhiteCard>

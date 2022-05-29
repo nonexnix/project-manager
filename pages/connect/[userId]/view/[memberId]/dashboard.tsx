@@ -52,6 +52,7 @@ const Dashboard: NextPage<IProps> = ({
   const member = useClientStore((state) => state.member)
   const project = useClientStore((state) => state.project)
   const deleteProject = useClientStore((state) => state.delete.project)
+  const completeProject = useClientStore((state) => state.update.project.over)
   const updateMembership = useClientStore(
     (state) => state.update.member?.active
   )
@@ -83,6 +84,7 @@ const Dashboard: NextPage<IProps> = ({
         <Header
           firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
           lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
+          id={user.id}
         />
         <Main>
           <section>
@@ -117,6 +119,45 @@ const Dashboard: NextPage<IProps> = ({
                               'py-4 px-8 hover:bg-snow transition-all duration-300'
                             }
                           />
+
+                          {/* Set as done */}
+                          {project.over === true ? (
+                            <button
+                              onClick={() =>
+                                completeProject({
+                                  id: project.id,
+                                  key: 'over',
+                                  value: false,
+                                })
+                              }
+                            >
+                              <Linker
+                                name={'Set as Incomplete'}
+                                link={'#'}
+                                style={
+                                  'py-4 px-8 hover:bg-snow transition-all duration-300'
+                                }
+                              />
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() =>
+                                completeProject({
+                                  id: project.id,
+                                  key: 'over',
+                                  value: true,
+                                })
+                              }
+                            >
+                              <Linker
+                                name={'Set as Done'}
+                                link={'#'}
+                                style={
+                                  'py-4 px-8 hover:bg-snow transition-all duration-300'
+                                }
+                              />
+                            </button>
+                          )}
 
                           {/* Copy */}
                           <button onClick={() => setCopyCode(!copyCode)}>
@@ -200,25 +241,34 @@ const Dashboard: NextPage<IProps> = ({
                     </div>
                   </div>
                   <SnowCard>
-                    <div className="grid md:grid-cols-[1fr,auto] gap-2 md:gap-48 lg:gap-64 items-center">
-                      {/* progress bar */}
-                      <div>
-                        <div className="grid grid-flow-col items-center">
-                          <h1 className="text-xs text-gray-500">
-                            Completeness
+                    <div className="grid grid-cols-[1fr,auto] gap-2 md:gap-48 lg:gap-64 items-center">
+                      <div className="flex gap-10 items-center">
+                        {/* start and due date */}
+                        <div className="text-sm tracking-wide">
+                          {String(phase(initialProject?.createdAt, 'LL'))} -{' '}
+                          {String(phase(initialProject?.dueAt, 'LL'))}
+                        </div>
+                        {/* completeness */}
+                        {project?.over === true ?  
+                          <h1 className="text-green-600 font-bold tracking-wide">
+                            Completed
+                          </h1> : <h1 className="text-red-600 font-bold tracking-wide">
+                            Incomplete
                           </h1>
-                          <h1 className="text-xs text-gray-500 ml-auto">60%</h1>
-                        </div>
-                        <div className="relative w-full h-4 mt-1 border-[1px] border-gray-200 rounded-full">
-                          <div className="absolute left-0 top-0 w-[60%] h-full bg-green-500 rounded-full"></div>
-                        </div>
+                        }
                       </div>
+                      {/* Create Task Button */}
+                      <Button
+                        name={'Create New Task'}
+                        color={'bg-pink'}
+                        handler={() => setIsCreate(!isCreate)}
+                      />
 
-                      {/* start and due date */}
-                      <div className="text-sm tracking-wide">
-                        {String(phase(initialProject?.createdAt, 'LL'))} -{' '}
-                        {String(phase(initialProject?.dueAt, 'LL'))}
-                      </div>
+                      {isCreate && (
+                        <CreateTaskModal
+                          handler={() => setIsCreate(!isCreate)}
+                        />
+                      )}
                     </div>
                   </SnowCard>
                 </WhiteCard>
@@ -226,24 +276,14 @@ const Dashboard: NextPage<IProps> = ({
 
               {/* Project Tasks */}
               <div className="grid mt-5 gap-10">
-                {/* tasks count and create task btn */}
-                <div className="grid grid-cols-[1fr,auto] items-center">
-                  <h1>
-                    All (
-                    <span className="font-bold">
-                      {initialProject?.tasks?.length}
-                    </span>
-                    )
-                  </h1>
-                  <Button
-                    name={'Create New Task'}
-                    color={'blue'}
-                    handler={() => setIsCreate(!isCreate)}
-                  />
-                  {isCreate && (
-                    <CreateTaskModal handler={() => setIsCreate(!isCreate)} />
-                  )}
-                </div>
+                {/* tasks count*/}
+                <h1>
+                  All (
+                  <span className="font-bold">
+                    {initialProject?.tasks?.length}
+                  </span>
+                  )
+                </h1>
                 {/* all users' project */}
                 <div className="grid gap-3">
                   {project?.tasks?.map((task, index) => (
