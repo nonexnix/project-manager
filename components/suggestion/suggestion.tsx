@@ -55,14 +55,14 @@ const Suggestion = ({suggestion, firstName, lastName, id} : IProps) => {
         </div>
       </div>
 
-      <div className='grid grid-cols-[1fr,auto] items-center'>
+      <div className='grid md:grid-cols-[1fr,auto] items-center'>
         {/* created by and reactions */}
         <div className='flex items-center gap-16'>
           {/* created by */}
           <h1 className='text-xs text-gray-500 tracking-wide'>Posted by {firstName} {lastName}</h1>
 
           {/* reactions */}
-          <div className='flex items-center gap-10'>
+          <div className='flex items-center gap-10 ml-12 md:ml-0'>
             <IconLabel icon={<ThumbUpIcon/>} label={20} style={'w-5 h-5 cursor-pointer hover:scale-125 hover:text-pink transiton-all duration-500'}/>
             <IconLabel icon={<ThumbDownIcon/>} label={12} style={'w-5 h-5 cursor hover:scale-125 hover:text-black transiton-all duration-300'}/>
           </div>
