@@ -30,7 +30,7 @@ const PostAnnouncement = ({memberId, projectId, handler}: IProps) => {
   }
 
   return (
-    <div className="absolute -top-64 left-0 bottom-0 right-0  w-full grid justify-center items-center z-50">
+    <div className="absolute -top-64 left-0 bottom-0 right-0 w-full grid justify-center items-center z-50">
       <div className="bg-white w-md shadow-xl shadow-violet px-8 py-6 z-50">
         {/* title logo */}
         <div className="flex items-center gap-3">
