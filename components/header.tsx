@@ -7,9 +7,10 @@ import Button from './button/button'
 interface IProps {
   firstName:string
   lastName:string
+  id:string
 }
 
-const Header = ({firstName, lastName} : IProps) => {
+const Header = ({firstName, lastName, id} : IProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -40,7 +41,7 @@ const Header = ({firstName, lastName} : IProps) => {
           {open && (
             <div className="absolute right-5 z-50 bg-white shadow-md shadow-gray-200 grid items-center">
               <div className="hover:bg-snow px-5 py-3 transition-all duration-500">
-                <Linker name={'All Projects'} link={'/'} />
+                <Linker name={'All Projects'} link={`/connect/${id}`} />
               </div>
               <div className="hover:bg-snow px-5 py-3 transition-all duration-500">
                 <Linker name={'Logout'} link={'/'} />{' '}

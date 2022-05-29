@@ -56,6 +56,7 @@ const Announcements: NextPage<IProps> = ({
         <Header
           firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
           lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
+          id={user.id}
         />
         <Main>
           <section>

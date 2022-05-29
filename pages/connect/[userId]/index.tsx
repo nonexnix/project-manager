@@ -35,14 +35,13 @@ const Home: NextPage<IProps> = ({ initialUser }) => {
 
   if (!ready) return <></>
 
-  console.log(isJoin)
-
   return (
     <Foundation title="Home">
       <Layout>
         <Header
           firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
           lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
+          id={user.id}
         />
         <Main>
           <section>

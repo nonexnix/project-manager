@@ -54,6 +54,7 @@ const Files: NextPage<IProps> = ({
         <Header
           firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
           lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
+          id={user.id}
         />
         <Main>
           <section>
@@ -94,7 +95,7 @@ const Files: NextPage<IProps> = ({
               </h1>
 
               {/* project members */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                 <File />
               </div>
             </div>

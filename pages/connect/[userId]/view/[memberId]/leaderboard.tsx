@@ -52,6 +52,7 @@ const Leaderboard: NextPage<IProps> = ({
           <Header
             firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
             lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
+            id={user.id}
           />
           <Main>
             <section>
@@ -71,7 +72,6 @@ const Leaderboard: NextPage<IProps> = ({
                   {/* top ranks and title */}
                   <div className='grid gap-8'>
                     <h1 className='text-lg text-center font-semibold tracking-wide'>Team Top Contributors</h1>
-
                     <TopRanks/>
                   </div>
                 </div>
