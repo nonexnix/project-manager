@@ -18,6 +18,7 @@ import { MenuAlt1Icon } from '@heroicons/react/outline'
 import Icon from '../../../../../components/icon/icon'
 import Sidebar from '../../../../../components/sidebar/sidebar'
 import Suggestion from '../../../../../components/suggestion/suggestion'
+import useFieldStore from '../../../../../library/stores/field'
 
 interface IProps {
   initialUser: IUser
@@ -35,6 +36,8 @@ const Suggestions: NextPage<IProps> = ({
   const project = useClientStore((state) => state.project)
   const member = useClientStore((state) => state.member)
   const [isOpen, setIsOpen] = useState(false)
+  const suggestionField = useFieldStore((state) => state.suggestion)
+  const postSuggestion = useClientStore((state) => state.create.suggestion)
 
   useEffect(() => {
     setReady(true)
@@ -45,10 +48,22 @@ const Suggestions: NextPage<IProps> = ({
 
   if (!ready) return <></>
 
-  console.log(user)
+  const handlePostSubmission = () => {
+    postSuggestion({
+      name: suggestionField.value.name,
+      description: suggestionField.value.description,
+      memberId: member.id,
+      projectId: project.id,
+    })
+
+    suggestionField.clear()
+  
+    console.log('description ' + suggestionField.value.description)
+    console.log('title ' + suggestionField.value.name)
+  }
 
   return (
-    <Foundation title="Project Announcements">
+    <Foundation title="Project Suggestions">
       <Layout>
         <Header
           firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
@@ -75,17 +90,37 @@ const Suggestions: NextPage<IProps> = ({
                 <div className="grid gap-5 bg-white py-5 px-8">
                   <input
                     type="text"
-                    placeholder={`What's on your mind ${
-                      user.firstName[0].toUpperCase() + user.firstName.slice(1)
-                    } ? `}
+                    placeholder={"Enter Suggestion Title"}
                     className="border-none bg-white py-2 pl-2 outline-none focus-none"
+                    value={suggestionField.value.name}
+                    onChange={(e) =>
+                      suggestionField.set({
+                        ...suggestionField.value,
+                        name: e.target.value,
+                      })
+                    }
+                  />
+                  <textarea
+                    placeholder={"What are you suggesting?"}
+                    className="border-none bg-white py-2 pl-2 outline-none focus-none"
+                    value={suggestionField.value.description}
+                    onChange={(e) =>
+                      suggestionField.set({
+                        ...suggestionField.value,
+                        description: e.target.value,
+                      })
+                    }
                   />
                 </div>
 
                 {/* post button */}
-                <button className="ml-auto">
-                  <Button name={'Post Suggestion'} color={'bg-pink'} />
-                </button>
+                <div className="ml-auto">
+                  <Button
+                    name={'Post Suggestion'}
+                    color={'bg-pink'}
+                    handler={handlePostSubmission}
+                  />
+                </div>
               </div>
 
               {/* suggestions */}
@@ -100,6 +135,7 @@ const Suggestions: NextPage<IProps> = ({
                     lastName={
                       user.lastName[0].toUpperCase() + user.lastName.slice(1)
                     }
+                    id={suggestion.id}
                   />
                 ))}
               </div>
@@ -170,7 +206,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       suggestions: {
         include: {
           votes: true,
-        }
+        },
       },
       files: true,
       announcements: true,
