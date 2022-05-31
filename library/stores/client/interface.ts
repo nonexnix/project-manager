@@ -1,5 +1,5 @@
 import type { IMember, IMessage, IProject, IUser } from '../../schemas/interfaces'
-import type { TEmoji, TMark, TPriority, TStatus } from '../../schemas/types'
+import type { TEmoji, TMark, TPriority, TStatus, TToken } from '../../schemas/types'
 
 interface IUseClientStore {
   user: IUser
@@ -73,7 +73,7 @@ interface ICreate {
   }) => void
   participant: (payload: { access?: boolean; memberId: string; key: IParticipantKey; value: string }) => void
   participants: (payload: { access?: boolean; memberId: string; key: IParticipantKey; value: string }[]) => void
-  ticket: (payload: { code: string; userId: string; projectId: string }) => void
+  ticket: (payload: { code: string; token:TToken; userId: string; projectId: string }) => void
 }
 
 interface IDelete {
