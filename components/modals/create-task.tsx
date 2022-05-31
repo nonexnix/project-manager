@@ -12,30 +12,36 @@ interface IProps {
   handler: any
 }
 
-const CreateTaskModal = ({ handler}: IProps) => {
+const CreateTaskModal = ({ handler }: IProps) => {
   const project = useClientStore((state) => state.project)
   const member = useClientStore((state) => state.member)
   const createTask = useClientStore((state) => state.create.task)
   const taskField = useFieldStore((state) => state.task)
 
   console.log(project)
+
   const handleCreateButton = () => {
+    const minifiedParticipants = taskField.value.participants!.map((participant) => {
+      return {
+        memberId:participant.memberId
+      }
+    })
+
     createTask({
       name: taskField?.value?.name,
       description: taskField?.value?.description,
       dueAt: String(taskField?.value?.dueAt),
-      memberId:member?.id,
-      projectId:project?.id,
-      priority:taskField?.value?.priority,
+      memberId: member.id,
+      projectId: project?.id,
+      priority: taskField?.value?.priority,
+      participants: minifiedParticipants
     })
     taskField.clear()
   }
 
-  
-
   return (
-    <div className="fixed top-0 left-0 translate-y-1/2 w-full lg:w-[800px] grid items-center z-50">
-      <div className="bg-white w-md shadow-xl shadow-violet px-10 py-6 z-50">
+    <div className="fixed inset-0">
+      <div className="bg-white max-w-7xl relative inset-2/4 -translate-x-1/2 -translate-y-1/2 shadow-xl shadow-violet px-10 py-6 z-50">
         {/* title logo */}
         <div className="flex items-center gap-3">
           <Icon icon={<CollectionIcon />} />
@@ -78,7 +84,7 @@ const CreateTaskModal = ({ handler}: IProps) => {
             <h1 className="text-sm leading-relaxed">Due Date</h1>
             <div className="grid grid-cols-[1fr,auto] gap-5 items-center">
               <input
-                type="text"
+                type="date"
                 className="relative bg-snow py-2 pl-4 outline-none"
                 value={String(taskField?.value?.dueAt)}
                 onChange={(e) =>
@@ -90,21 +96,22 @@ const CreateTaskModal = ({ handler}: IProps) => {
           </div>
 
           {/* task priority */}
-          <div className='grid gap-2'>
+          <div className="grid gap-2">
             <h1 className="text-sm leading-relaxed">Priority</h1>
-            <Priority/>
+            <Priority />
           </div>
 
           {/* Task Members */}
           <div className="grid gap-3">
             <h1 className="text-sm leading-relaxed">Task Members</h1>
 
-            <div className="bg-white h-56 border-2 border-gray-200 grid lg:grid-cols-2 gap-2 py-3 px-4 overflow-y-scroll">
+            <div className="bg-white h-56 border-2 border-gray-200 flex flex-col gap-2 py-3 px-4 overflow-y-scroll">
               {project?.members?.map((member) => (
                 <Member
                   key={member?.id}
                   firstName={member?.user!.firstName}
                   lastName={member?.user!.lastName}
+                  memberId={member.id}
                 />
               ))}
             </div>
@@ -118,7 +125,7 @@ const CreateTaskModal = ({ handler}: IProps) => {
             >
               Cancel
             </button>
-            <Button name="Create New Task" color={'bg-blue'} />
+            <Button name="Create New Task" color={'bg-blue'} handler={handleCreateButton}/>
           </div>
         </div>
       </div>
