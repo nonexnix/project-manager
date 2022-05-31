@@ -57,7 +57,7 @@ const EditProject: NextPage<IProps> = ({
   if (!ready) return <></>
 
   return (
-    <Foundation title="Dashboard">
+    <Foundation title="Edit Project">
       <Layout>
         <Header
           firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
