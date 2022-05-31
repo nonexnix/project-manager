@@ -262,25 +262,33 @@ const Requests: NextPage<IProps> = ({
                   </SnowCard>
                 </WhiteCard>
               </div>
-              
+
               <div className="grid mt-5 gap-10">
                 {/* requests count*/}
                 <h1>
                   All (
-                  <span className="font-bold">10</span>
-                  )
+                  <span className="font-bold">{project!.tickets!.length}</span>)
                 </h1>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5'>
-                  <Request/>
-                  <Request/>
-                  <Request/>
-                  <Request/>
-                  <Request/>
-                  <Request/>
+                {/* join requests */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                  {project.tickets?.map((ticket) => (
+                    <Request
+                      firstName={
+                        ticket.user!.firstName[0].toUpperCase() +
+                        ticket!.user!.firstName.slice(1)
+                      }
+                      lastName={
+                        ticket!.user!.lastName[0].toUpperCase() +
+                        ticket!.user!.lastName.slice(1)
+                      }
+                      userId={ticket!.user!.id}
+                      projectId={ticket.projectId}
+                      ticketId={ticket.id}
+                    />
+                  ))}
                 </div>
               </div>
-              {/* Join Requests */}
             </div>
           </section>
         </Main>
@@ -343,6 +351,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       suggestions: true,
       files: true,
       announcements: true,
+      tickets: {
+        include: {
+          user: true,
+        },
+      },
     },
   })
 
