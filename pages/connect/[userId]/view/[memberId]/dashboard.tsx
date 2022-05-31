@@ -249,13 +249,15 @@ const Dashboard: NextPage<IProps> = ({
                           {String(phase(initialProject?.dueAt, 'LL'))}
                         </div>
                         {/* completeness */}
-                        {project?.over === true ?  
+                        {project?.over === true ? (
                           <h1 className="text-green-600 font-bold tracking-wide">
                             Completed
-                          </h1> : <h1 className="text-red-600 font-bold tracking-wide">
+                          </h1>
+                        ) : (
+                          <h1 className="text-red-600 font-bold tracking-wide">
                             Incomplete
                           </h1>
-                        }
+                        )}
                       </div>
                       {/* Create Task Button */}
                       <Button
@@ -287,7 +289,7 @@ const Dashboard: NextPage<IProps> = ({
                 {/* all users' project */}
                 <div className="grid gap-3">
                   {project?.tasks?.map((task, index) => (
-                    <Task task={task} index={index + 1} />
+                    <Task task={task} index={index + 1} userId={user.id} memberId={member.id}/>
                   ))}
                 </div>
               </div>
