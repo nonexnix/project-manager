@@ -47,6 +47,7 @@ const placeholder: IPlaceholder = {
     dueAt: '',
     memberId: '',
     projectId: '',
+    participants: []
   },
   todo: {
     id: '',
