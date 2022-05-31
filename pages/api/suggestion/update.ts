@@ -9,8 +9,9 @@ const handler: THandler = async (request, response) => {
   if (request.method === 'PUT') {
     const body = JSON.parse(request.body)
     const value = body.key === 'dueAt' ? phase(body.value, 'iso') : body.value
+    console.log(body)
     try {
-      await prisma.role.update({
+      await prisma.suggestion.update({
         where: { id: body.id },
         data: { [body.key]: value },
       })
