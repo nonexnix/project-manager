@@ -89,11 +89,25 @@ const Members: NextPage<IProps> = ({
               </h1>
 
               {/* project members */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {project?.members
                   ?.filter(({ active }) => active)
                   .map((member) => (
-                    <Member key={member.id} user={user} project={project}memberId={member.id}/>
+                    <Member
+                      key={member.id}
+                      user={user}
+                      project={project}
+                      member={member}
+                      memberId={member.id}
+                      firstName={
+                        member!.user!.firstName[0].toUpperCase() +
+                        member!.user!.firstName.slice(1)
+                      }
+                      lastName={
+                        member!.user!.lastName[0].toUpperCase() +
+                        member!.user!.lastName.slice(1)
+                      }
+                    />
                   ))}
               </div>
             </div>
@@ -152,11 +166,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             include: {
               role: {
                 include: {
-                  permission: true
-                }
-              }
-            }
-          }
+                  permission: true,
+                },
+              },
+            },
+          },
         },
       },
       tasks: {
