@@ -22,8 +22,8 @@ const CreateProjectModal = ({handler} : any) => {
   }
 
   return (
-    <div className='fixed top-0 left-0 translate-y-1/2 w-full lg:w-[800px] grid items-center z-50'>
-      <div className="bg-white w-md shadow-xl shadow-violet px-10 py-6 z-50">
+    <div className="fixed inset-0">
+      <div className="bg-white max-w-7xl relative inset-2/4 -translate-x-1/2 -translate-y-1/2 shadow-xl shadow-violet px-10 py-6 z-50">
         {/* title logo */}
         <div className="flex items-center gap-3">
           <Icon icon={<CollectionIcon />} />
@@ -61,7 +61,7 @@ const CreateProjectModal = ({handler} : any) => {
             <h1 className="text-sm leading-relaxed">Due Date</h1>
             <div className='grid grid-cols-[1fr,auto] gap-5 items-center'>
               <input
-                type="text"
+                type="date"
                 className="relative bg-snow py-2 pl-4 outline-none"
                 value={String(projectField.value.dueAt)}
                 onChange={(e) =>
