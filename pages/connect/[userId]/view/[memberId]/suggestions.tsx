@@ -131,10 +131,10 @@ const Suggestions: NextPage<IProps> = ({
                     key={suggestion.id}
                     suggestion={suggestion}
                     firstName={
-                      user.firstName[0].toUpperCase() + user.firstName.slice(1)
+                      suggestion!.member!.user!.firstName[0].toUpperCase() + suggestion!.member!.user!.firstName.slice(1)
                     }
                     lastName={
-                      user.lastName[0].toUpperCase() + user.lastName.slice(1)
+                      suggestion!.member!.user!.lastName[0].toUpperCase() + suggestion!.member!.user!.lastName.slice(1)
                     }
                     id={suggestion.id}
                   />
@@ -207,6 +207,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       suggestions: {
         include: {
           votes: true,
+          member: {
+            include: {
+              user: true
+            }
+          }
         },
       },
       files: true,
