@@ -13,13 +13,12 @@ interface IProps {
 const SubmitFile = ({memberId, projectId, handler}:IProps) => {
   const submitFile = useClientStore((state) => state.create.file)
   const fileField = useFieldStore((state) => state.file)
-  const fileName:string = fileField!.value.path!.split(".")[0].toString()
-  const fileExtension:string = fileField!.value!.path.split(".")[0].toString()
-
+  
+  console.log(fileField.value)
   const handleSubmitFile = () => {
     submitFile({
-      name: fileName,
-      extension: fileExtension,
+      name: fileField.value.name,
+      extension: fileField.value.extension,
       description:fileField.value.description,
       path: fileField.value.path,
       memberId:memberId,
@@ -34,8 +33,8 @@ const SubmitFile = ({memberId, projectId, handler}:IProps) => {
   }
 
   return (
-    <div className="fixed top-0 left-0 translate-y-1/2 w-full grid justify-center items-center z-50">
-      <div className="bg-white w-md shadow-xl shadow-violet px-8 py-6 z-50">
+    <div className="fixed inset-0">
+      <div className="bg-white max-w-7xl relative inset-2/4 -translate-x-1/2 -translate-y-1/2 shadow-xl shadow-violet px-10 py-6 z-50">
         {/* title logo */}
         <div className="flex items-center gap-3">
           <Icon icon={<FolderOpenIcon />} />
@@ -50,9 +49,14 @@ const SubmitFile = ({memberId, projectId, handler}:IProps) => {
             className="bg-snow py-3 pl-4 outline-none w-full"
             placeholder="Enter File"
             value={fileField.value.path}
-            onChange={(e) =>
-              fileField.set({ ...fileField.value, path: e.target.value })
-            }
+            onChange={(e) => {
+              fileField.set({ 
+                ...fileField.value, 
+                path: e.target.value,
+                name: e.target.value.split('\\')[e.target.value.split('\\').length - 1].toString().split('.')[0].toString(),
+                extension: e.target.value.split('.')[e.target.value.split('.').length - 1].toString()
+              })
+            }}
           />
 
           {/* description */}
@@ -71,7 +75,7 @@ const SubmitFile = ({memberId, projectId, handler}:IProps) => {
           <button onClick={handler} className="border-[1px] border-gray-200 rounded-md bg-transparent px-4 py-2 text-sm hover:text-red-500 transition-all duration-300 hover:scale-105">
             Cancel
           </button>
-          <Button name="Submit File" color={'bg-blue'} handler={handleSubmitFile} />
+          <Button name="Submit File" color={'bg-blue'}  handler={handleSubmitFile}/>
         </div>
       </div>
     </div>
