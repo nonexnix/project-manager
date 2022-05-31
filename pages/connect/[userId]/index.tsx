@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticPaths, GetStaticProps } from 'next'
 import { useEffect, useState } from 'react'
-import type { IUser } from '../../../library/schemas/interfaces'
+import type { IProject, IUser } from '../../../library/schemas/interfaces'
 import useClientStore from '../../../library/stores/client'
 import objectified from '../../../library/utilities/objectified'
 import prisma from '../../../library/utilities/prisma'
@@ -19,9 +19,10 @@ import JoinProjectModal from '../../../components/modals/join-project'
 
 interface IProps {
   initialUser: IUser
+  initialProjects: IProject[]
 }
 
-const Home: NextPage<IProps> = ({ initialUser }) => {
+const Home: NextPage<IProps> = ({ initialUser, initialProjects }) => {
   const [ready, setReady] = useState(false)
   const user = useClientStore((state) => state.user)
   const [isCreate, setIsCreate] = useState(false)
@@ -66,17 +67,8 @@ const Home: NextPage<IProps> = ({ initialUser }) => {
                         color={'bg-blue'}
                         handler={() => setIsJoin(!isJoin)}
                       />
-                      {/* {isJoin && (
-                        <JoinProjectModal
-                          handler={() => setIsJoin(!isJoin)}
-                          // userId={user?.id}
-                          // projectId={user?.members?.projectId}
-                        />
-                      )} */}
+                      {isJoin && <JoinProjectModal projects={initialProjects} handler={() => setIsJoin(!isJoin)}/>}
 
-                      {isJoin && (
-                        <JoinProjectModal handler={() => setIsJoin(!isJoin)} />
-                      )}
                       <Button
                         name={'Create New Project'}
                         color={'bg-pink'}
@@ -97,7 +89,7 @@ const Home: NextPage<IProps> = ({ initialUser }) => {
             <div className="grid mt-10 gap-10">
               {/* projects count */}
               <h1>
-                All ({' '}
+                All ({''}
                 <span className="font-bold">
                   {user.members?.filter(({ active }) => active).length}
                 </span>
@@ -111,7 +103,7 @@ const Home: NextPage<IProps> = ({ initialUser }) => {
                       return member.active === true
                     })
                     .map((member) => (
-                      <Project key={member?.id} member={member} />
+                      <Project key={member?.id} member={member}/>
                     ))}
               </div>
             </div>
@@ -165,9 +157,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   })
 
+  const projects = await prisma.project.findMany()
+
   return {
     props: {
       initialUser: objectified(user),
+      initialProjects: objectified(projects)
     },
     revalidate: 1,
   }
