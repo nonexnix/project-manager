@@ -56,8 +56,6 @@ const EditProject: NextPage<IProps> = ({
 
   if (!ready) return <></>
 
-  console.log(project)
-
   return (
     <Foundation title="Dashboard">
       <Layout>
@@ -130,9 +128,11 @@ const EditProject: NextPage<IProps> = ({
                 <div className="grid grid-cols-[1fr,auto] items-center gap-10">
                   <div className="flex items-center gap-3">
                     <input
-                      type="text"
+                      type="date"
                       className="relative bg-white py-3 pl-6 outline-none w-[80%]"
-                      defaultValue={String(phase(project.dueAt, 'LL'))}
+                      defaultValue={String(
+                        phase(projectField.value.dueAt, 'LL')
+                      )}
                       onChange={(e) =>
                         projectField.set({
                           ...projectField.value,
@@ -144,13 +144,13 @@ const EditProject: NextPage<IProps> = ({
                   </div>
 
                   <Button
-                    name={'Save'}
-                    color={'bg-blue'}
+                    name="Save"
+                    color="bg-blue"
                     handler={() =>
                       updateProjectDue({
                         id: project.id,
                         key: 'dueAt',
-                        value: 'projectField.value.dueAt',
+                        value: String(phase(projectField.value.dueAt)),
                       })
                     }
                   />
