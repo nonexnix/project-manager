@@ -19,6 +19,7 @@ const handler: THandler = async (request, response) => {
           projectId: body.projectId,
           participants: { createMany: { data: body.participants ? [...body.participants] : [] } },
         },
+        
       })
       response.status(201).json(postman(201))
     } catch (error) {
@@ -31,3 +32,6 @@ const handler: THandler = async (request, response) => {
 }
 
 export default handler
+
+
+
