@@ -22,7 +22,7 @@ const CreateProjectModal = ({handler} : any) => {
   }
 
   return (
-    <div className='absolute -top-2/3 md:-top-1/3 left-0 lg:left-1/3 bottom-0 right-0 w-full lg:w-[800px] grid items-center z-50'>
+    <div className='fixed top-0 left-0 translate-y-1/2 w-full lg:w-[800px] grid items-center z-50'>
       <div className="bg-white w-md shadow-xl shadow-violet px-10 py-6 z-50">
         {/* title logo */}
         <div className="flex items-center gap-3">

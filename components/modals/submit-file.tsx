@@ -34,7 +34,7 @@ const SubmitFile = ({memberId, projectId, handler}:IProps) => {
   }
 
   return (
-    <div className="absolute top-0 left-0 bottom-0 right-0  w-full grid justify-center items-center z-50">
+    <div className="fixed top-0 left-0 translate-y-1/2 w-full grid justify-center items-center z-50">
       <div className="bg-white w-md shadow-xl shadow-violet px-8 py-6 z-50">
         {/* title logo */}
         <div className="flex items-center gap-3">
