@@ -114,7 +114,7 @@ const Dashboard: NextPage<IProps> = ({
                           {/* Edit Project */}
                           <Linker
                             name={'Edit Project'}
-                            link={'#'}
+                            link={`/connect/${user.id}/view/${member.id}/edit/project`}
                             style={
                               'py-4 px-8 hover:bg-snow transition-all duration-300'
                             }
