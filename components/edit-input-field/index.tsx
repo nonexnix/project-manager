@@ -18,7 +18,7 @@ const EditTextField = ({
 }: IProps) => {
   return (
     <div className="grid gap-3">
-      <h1 className="text-sm tracking-wide text-gray-500">
+      <h1 className="text-sm tracking-wide text-gray-500 text-left">
         {inputLabel}
       </h1>
 
