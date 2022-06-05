@@ -66,6 +66,14 @@ const Sidebar = ({userId, memberId}:IProps) => {
           'py-4 px-16 hover:bg-snow transition-all duration-300'
         }
       />
+      {/* chat */}
+      <Linker
+        name={'Chat'}
+        link={`/connect/${userId}/view/${memberId}/chat`}
+        style={
+          'py-4 px-16 hover:bg-snow transition-all duration-300'
+        }
+      />
     </div>
   )
 }
