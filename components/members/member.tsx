@@ -1,24 +1,31 @@
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { IMember, IProject, IUser } from '../../library/schemas/interfaces'
 import Icon from '../icon/icon'
 import Linker from '../link/link'
 import Role from '../role/role'
 import Profile from './profile'
-import type { GetStaticPaths, GetStaticProps } from 'next'
-import objectified from '../../library/utilities/objectified'
 import useClientStore from '../../library/stores/client'
+import GiveAuthorization from '../modals/create-authorization'
 
 interface IProps {
   user: IUser
   project: IProject
-  member:IMember
+  member: IMember
   memberId: string
   lastName: string
   firstName: string
 }
-const Member = ({ user, project,member, memberId, lastName, firstName}: IProps) => {
+const Member = ({
+  user,
+  project,
+  member,
+  memberId,
+  lastName,
+  firstName,
+}: IProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [giveAuthorization, setGiveAuthorization] = useState(false)
   const kickMember = useClientStore((state) => state.update.member.active)
 
   return (
@@ -33,67 +40,56 @@ const Member = ({ user, project,member, memberId, lastName, firstName}: IProps) 
         </div>
 
         {/* option button */}
-        {project?.members!.map((member) => {
-          return member?.authorizations!.map((authorization) => {
-            console.log(authorization.role?.permission)
-            if (authorization.role?.permission?.everything === true) {
-              return (
-                <div className="relative">
-                  <button onClick={() => setIsOpen(!isOpen)}>
-                    <Icon icon={<DotsHorizontalIcon />} />
-                  </button>
+        <div className="relative">
+          <button onClick={() => setIsOpen(!isOpen)}>
+            <Icon icon={<DotsHorizontalIcon />} />
+          </button>
 
-                  {isOpen && (
-                    <div className="absolute top-6 right-0 bg-white shadow-md shadow-violet">
-                      {/* Edit roles */}
-                      <Linker
-                        name={'Edit Roles'}
-                        link={'#'}
-                        style={
-                          'py-4 px-8 hover:bg-snow transition-all duration-300'
-                        }
-                      />
+          {isOpen && (
+            <div className="absolute top-6 right-0 bg-white shadow-md shadow-violet">
+              {/* Edit Authorization */}
+              <button onClick={() => setGiveAuthorization(!giveAuthorization)}>
+                <Linker
+                  name={'Edit Roles'}
+                  link={'#'}
+                  style={'py-4 px-8 hover:bg-snow transition-all duration-300'}
+                />
+              </button>
 
-                      {/* Edit Permission */}
-                      <Linker
-                        name={'Edit Permission'}
-                        link={'#'}
-                        style={
-                          'py-4 px-8 hover:bg-snow transition-all duration-300'
-                        }
-                      />
+              {giveAuthorization && (
+                <GiveAuthorization
+                  project={project}
+                  cancelBtn={() => setGiveAuthorization(!giveAuthorization)}
+                  memberId={memberId}
+                  authorizations={member.authorizations!}
+                />
+              )}
 
-                      {/* Kick Member */}
-                      <button
-                        onClick={() =>
-                          kickMember({
-                            id: memberId,
-                            key: 'active',
-                            value: false,
-                          })
-                        }
-                      >
-                        <Linker
-                          name={'Kick Member'}
-                          link={'#'}
-                          style={
-                            'py-4 px-8 hover:bg-snow transition-all duration-300'
-                          }
-                        />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )
-            }
-          })
-        })}
+              {/* Kick Member */}
+              <button
+                onClick={() =>
+                  kickMember({
+                    id: memberId,
+                    key: 'active',
+                    value: false,
+                  })
+                }
+              >
+                <Linker
+                  name={'Kick Member'}
+                  link={'#'}
+                  style={'py-4 px-8 hover:bg-snow transition-all duration-300'}
+                />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* roles */}
       <div className="flex items-center">
         {member.authorizations?.map((authorization) => (
-          <Role key={authorization.id} role={authorization.role?.name}/>
+          <Role key={authorization.id} role={authorization.role?.name} />
         ))}
       </div>
     </div>
@@ -101,5 +97,3 @@ const Member = ({ user, project,member, memberId, lastName, firstName}: IProps) 
 }
 
 export default Member
-
-
