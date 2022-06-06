@@ -1,21 +1,24 @@
-import { MenuAlt1Icon } from "@heroicons/react/outline"
-import { GetStaticPaths, GetStaticProps, NextPage } from "next"
-import { useEffect, useState } from "react"
-import Foundation from "../../../../../components/foundation"
-import Header from "../../../../../components/header"
-import Icon from "../../../../../components/icon/icon"
-import Layout from "../../../../../components/layout"
-import Rank from "../../../../../components/leaderboard/rank"
-import TopRanks from "../../../../../components/leaderboard/top-ranks"
-import TopRank from "../../../../../components/leaderboard/top-ranks"
-import Main from "../../../../../components/main"
-import Sidebar from "../../../../../components/sidebar/sidebar"
-import { IMember, IProject, IUser } from "../../../../../library/schemas/interfaces"
-import useClientStore from "../../../../../library/stores/client"
-import objectified from "../../../../../library/utilities/objectified"
+import { MenuAlt1Icon } from '@heroicons/react/outline'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { useEffect, useState } from 'react'
+import Foundation from '../../../../../components/foundation'
+import Header from '../../../../../components/header'
+import Icon from '../../../../../components/icon/icon'
+import Layout from '../../../../../components/layout'
+import Rank from '../../../../../components/leaderboard/rank'
+import Ranks from '../../../../../components/leaderboard/ranks'
+import TopRank from '../../../../../components/leaderboard/top-rank'
+import TopRanks from '../../../../../components/leaderboard/top-ranks'
+import Main from '../../../../../components/main'
+import Sidebar from '../../../../../components/sidebar/sidebar'
+import {
+  IMember,
+  IProject,
+  IUser,
+} from '../../../../../library/schemas/interfaces'
+import useClientStore from '../../../../../library/stores/client'
+import objectified from '../../../../../library/utilities/objectified'
 import prisma from '../../../../../library/utilities/prisma'
-
-
 
 interface IProps {
   initialUser: IUser
@@ -33,8 +36,7 @@ const Leaderboard: NextPage<IProps> = ({
   const project = useClientStore((state) => state.project)
   const member = useClientStore((state) => state.member)
   const [isOpen, setIsOpen] = useState(false)
-
-
+  
   useEffect(() => {
     setReady(true)
     useClientStore.getState().read.user(initialUser)
@@ -44,63 +46,55 @@ const Leaderboard: NextPage<IProps> = ({
 
   if (!ready) return <></>
 
-  console.log(user)
+  return (
+    <Foundation title="Project Leaderboard">
+      <Layout>
+        <Header
+          firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
+          lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
+          id={user.id}
+        />
+        <Main>
+          <section>
+            <div className="max-w-7xl mx-auto full grid gap-20">
+              <div className="grid grid-cols-[auto,1fr] gap-6 items-start">
+                {/* sidebar */}
+                <div className="grid relative">
+                  <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="relative"
+                  >
+                    <Icon icon={<MenuAlt1Icon />} />
+                  </button>
 
-    return (
-      <Foundation title="Project Leaderboard">
-        <Layout>
-          <Header
-            firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
-            lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
-            id={user.id}
-          />
-          <Main>
-            <section>
-              <div className="max-w-7xl mx-auto full grid gap-20">
-
-                <div className='grid grid-cols-[auto,1fr] gap-6 items-start'>
-                  {/* sidebar */}
-                  <div className="grid relative">
-                    <button onClick={() => setIsOpen(!isOpen)} className="relative">
-                      <Icon icon={<MenuAlt1Icon />} />
-                    </button>
-
-                    {/* side bar */}
-                    {isOpen && <Sidebar userId={user.id} memberId={member.id} />}
-                  </div>
-
-                  {/* top ranks and title */}
-                  <div className='grid gap-8'>
-                    <h1 className='text-lg text-center font-semibold tracking-wide'>Team Top Contributors</h1>
-                    <TopRanks/>
-                  </div>
+                  {/* side bar */}
+                  {isOpen && <Sidebar userId={user.id} memberId={member.id} />}
                 </div>
 
-                {/* ranks */}
-                <div className='grid  gap-3'>
-                  <Rank/>
-                  <Rank/>
-                  <Rank/>
-                  <Rank/>
-                  <Rank/>
-                  <Rank/>
-                  <Rank/>
-                  <Rank/>
-                  <Rank/>
-                  <Rank/>
-                  <Rank/>
+                {/* top ranks and title */}
+                <div className="grid gap-8">
+                  <h1 className="text-lg text-center font-semibold tracking-wide">
+                    Team Top Contributors
+                  </h1>
+                  
+                  {/* top ranks */}
+                  <TopRanks members={project.members!}/>
                 </div>
               </div>
-            </section>
-          </Main>
-        </Layout>
-      </Foundation>
+
+              {/* ranks */}
+              <div className="grid gap-3">
+                <Ranks members={project.members!}/>
+              </div>
+            </div>
+          </section>
+        </Main>
+      </Layout>
+    </Foundation>
   )
 }
 
 export default Leaderboard
-
-
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const members = await prisma.member.findMany()
