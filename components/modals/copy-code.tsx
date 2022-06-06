@@ -22,7 +22,7 @@ const ProjectCodeModal = ({handler, code}:IProps) => {
         </div>
 
         {/* Paste code field */}
-        <div className='bg-snow py-3 pl-4 w-full'>{code}</div>
+        <div className='bg-snow py-3 pl-4 w-full mt-6'>{code}</div>
       </div>
     </div>
   )
