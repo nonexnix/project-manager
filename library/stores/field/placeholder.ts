@@ -1,4 +1,4 @@
-import { IAnnouncement, IMessage, IProject, ISuggestion, ITask, ITodo } from '../../schemas/interfaces'
+import { IAnnouncement, IMessage, IProject, IRole, ISuggestion, ITask, ITodo } from '../../schemas/interfaces'
 import phase from '../../utilities/phase'
 import moment from 'moment'
 import IFile from '../../schemas/interfaces/file'
@@ -12,6 +12,7 @@ interface IPlaceholder {
   suggestion: ISuggestion
   file: IFile
   announcement: IAnnouncement
+  role: IRole
 }
 
 const placeholder: IPlaceholder = {
@@ -71,6 +72,7 @@ const placeholder: IPlaceholder = {
     updatedAt: phase(moment().format(), 'iso'),
     memberId: '',
     projectId: '',
+    votes: []
   },
   file: {
     id: '',
@@ -94,6 +96,14 @@ const placeholder: IPlaceholder = {
     memberId: '',
     projectId: '',
   },
+  role: {
+    id: '',
+    name: '',
+    description: '',
+    projectId: '',
+    permanent: true, 
+    constant: true
+  }
 }
 
 export default placeholder

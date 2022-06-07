@@ -45,7 +45,6 @@ const Members: NextPage<IProps> = ({
 
   if (!ready) return <></>
 
-  console.log(member)
   return (
     <Foundation title="Project Members">
       <Layout>
@@ -181,6 +180,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       suggestions: true,
       files: true,
       announcements: true,
+      roles:true
     },
   })
 

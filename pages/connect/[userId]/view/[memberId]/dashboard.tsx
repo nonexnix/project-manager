@@ -34,6 +34,8 @@ import ProjectCodeModal from '../../../../../components/modals/copy-code'
 import phase from '../../../../../library/utilities/phase'
 import Router, { useRouter } from 'next/router'
 import Sidebar from '../../../../../components/sidebar/sidebar'
+import GivePermission from '../../../../../components/modals/create-authorization'
+import CreateRoleModal from '../../../../../components/modals/create-role'
 
 interface IProps {
   initialUser: IUser
@@ -61,6 +63,7 @@ const Dashboard: NextPage<IProps> = ({
   const [isOpenOption, setIsOpenOption] = useState(false)
   const [isCreate, setIsCreate] = useState(false)
   const [copyCode, setCopyCode] = useState(false)
+  const [createRole, setCreateRole] = useState(false)
 
   useEffect(() => {
     setReady(true)
@@ -176,6 +179,25 @@ const Dashboard: NextPage<IProps> = ({
                             />
                           )}
 
+                          {/* create role */}
+                          <button onClick={() => setCreateRole(!createRole)}>
+                            <Linker
+                              name={'Add Role'}
+                              link={'#'}
+                              style={
+                                'py-4 px-8 hover:bg-snow transition-all duration-300'
+                              }
+                            />
+                          </button>
+
+                          {createRole && (
+                            <CreateRoleModal
+                              handler={() => setCreateRole(!createRole)}
+                              projectId={project.id}
+                            />
+                          )}
+
+
                           {/* Delete Project */}
                           <button
                             onClick={() => {
@@ -289,7 +311,12 @@ const Dashboard: NextPage<IProps> = ({
                 {/* all users' project */}
                 <div className="grid gap-3">
                   {project?.tasks?.map((task, index) => (
-                    <Task task={task} index={index + 1} userId={user.id} memberId={member.id}/>
+                    <Task
+                      task={task}
+                      index={index + 1}
+                      userId={user.id}
+                      memberId={member.id}
+                    />
                   ))}
                 </div>
               </div>
@@ -356,6 +383,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       suggestions: true,
       files: true,
       announcements: true,
+      roles: true,
     },
   })
 

@@ -1,5 +1,16 @@
-import type { IMember, IMessage, IProject, IUser } from '../../schemas/interfaces'
-import type { TEmoji, TMark, TPriority, TStatus, TToken } from '../../schemas/types'
+import type {
+  IMember,
+  IMessage,
+  IProject,
+  IUser,
+} from '../../schemas/interfaces'
+import type {
+  TEmoji,
+  TMark,
+  TPriority,
+  TStatus,
+  TToken,
+} from '../../schemas/types'
 
 interface IUseClientStore {
   user: IUser
@@ -21,14 +32,37 @@ interface IRead {
 }
 
 interface ICreate {
-  user: (payload: { email: string; username: string; firstName: string; lastName: string; image?: string }) => void
+  user: (payload: {
+    email: string
+    username: string
+    firstName: string
+    lastName: string
+    image?: string
+  }) => void
   member: (payload: { userId: string; projectId: string }) => void
   members: (payload: { userId: string; projectId: string }[]) => void
-  project: (payload: { name: string; description: string; dueAt: string; userId: string }) => void
-  role: (payload: { name: string; description: string; projectId: string }) => void
+  project: (payload: {
+    name: string
+    description: string
+    dueAt: string
+    userId: string
+  }) => void
+  role: (payload: {
+    name: string
+    description: string
+    projectId: string
+  }) => void
   authorization: (payload: { memberId: string; roleId: string }) => void
-  message: (payload: { text: string; memberId: string; projectId: string }) => void
-  reaction: (payload: { emoji: TEmoji; memberId: string; messageId: string }) => void
+  message: (payload: {
+    text: string
+    memberId: string
+    projectId: string
+  }) => void
+  reaction: (payload: {
+    emoji: TEmoji
+    memberId: string
+    messageId: string
+  }) => void
   task: (payload: {
     name: string
     description: string
@@ -54,7 +88,12 @@ interface ICreate {
     projectId: string
     participants?: { access?: boolean; memberId: string }[]
   }) => void
-  vote: (payload: { mark: TMark; memberId: string; suggestionId: string }) => void
+  vote: (payload: {
+    id: string
+    mark: TMark
+    memberId: string
+    suggestionId: string
+  }) => void
   file: (payload: {
     name: string
     description: string
@@ -71,9 +110,26 @@ interface ICreate {
     projectId: string
     participants?: { access?: boolean; memberId: string }[]
   }) => void
-  participant: (payload: { access?: boolean; memberId: string; key: IParticipantKey; value: string }) => void
-  participants: (payload: { access?: boolean; memberId: string; key: IParticipantKey; value: string }[]) => void
-  ticket: (payload: { code: string; token:TToken; userId: string; projectId: string }) => void
+  participant: (payload: {
+    access?: boolean
+    memberId: string
+    key: IParticipantKey
+    value: string
+  }) => void
+  participants: (
+    payload: {
+      access?: boolean
+      memberId: string
+      key: IParticipantKey
+      value: string
+    }[]
+  ) => void
+  ticket: (payload: {
+    code: string
+    token: TToken
+    userId: string
+    projectId: string
+  }) => void
 }
 
 interface IDelete {
@@ -97,7 +153,11 @@ interface IDelete {
 interface IUpdate {
   user: {
     username: (payload: { id: string; key: 'username'; value: string }) => void
-    firstName: (payload: { id: string; key: 'firstName'; value: string }) => void
+    firstName: (payload: {
+      id: string
+      key: 'firstName'
+      value: string
+    }) => void
     lastName: (payload: { id: string; key: 'lastName'; value: string }) => void
   }
   member: {
@@ -106,35 +166,63 @@ interface IUpdate {
   }
   project: {
     name: (payload: { id: string; key: 'name'; value: string }) => void
-    description: (payload: { id: string; key: 'description'; value: string }) => void
+    description: (payload: {
+      id: string
+      key: 'description'
+      value: string
+    }) => void
     over: (payload: { id: string; key: 'over'; value: boolean }) => void
     preserve: (payload: { id: string; key: 'preserve'; value: boolean }) => void
     dueAt: (payload: { id: string; key: 'dueAt'; value: string }) => void
   }
   role: {
     name: (payload: { id: string; key: 'name'; value: string }) => void
-    description: (payload: { id: string; key: 'description'; value: string }) => void
+    description: (payload: {
+      id: string
+      key: 'description'
+      value: string
+    }) => void
   }
   message: {
     text: (payload: { id: string; key: 'text'; value: string }) => void
   }
   task: {
     name: (payload: { id: string; key: 'name'; value: string }) => void
-    description: (payload: { id: string; key: 'description'; value: string }) => void
-    priority: (payload: { id: string; key: 'priority'; value: TPriority }) => void
+    description: (payload: {
+      id: string
+      key: 'description'
+      value: string
+    }) => void
+    priority: (payload: {
+      id: string
+      key: 'priority'
+      value: TPriority
+    }) => void
     over: (payload: { id: string; key: 'over'; value: boolean }) => void
     dueAt: (payload: { id: string; key: 'dueAt'; value: string }) => void
   }
   todo: {
     name: (payload: { id: string; key: 'name'; value: string }) => void
-    description: (payload: { id: string; key: 'description'; value: string }) => void
-    priority: (payload: { id: string; key: 'priority'; value: TPriority }) => void
+    description: (payload: {
+      id: string
+      key: 'description'
+      value: string
+    }) => void
+    priority: (payload: {
+      id: string
+      key: 'priority'
+      value: TPriority
+    }) => void
     over: (payload: { id: string; key: 'over'; value: boolean }) => void
     dueAt: (payload: { id: string; key: 'dueAt'; value: string }) => void
   }
   suggestion: {
     name: (payload: { id: string; key: 'name'; value: string }) => void
-    description: (payload: { id: string; key: 'description'; value: string }) => void
+    description: (payload: {
+      id: string
+      key: 'description'
+      value: string
+    }) => void
     status: (payload: { id: string; key: 'status'; value: TStatus }) => void
   }
   vote: {
@@ -142,12 +230,20 @@ interface IUpdate {
   }
   file: {
     name: (payload: { id: string; key: 'name'; value: string }) => void
-    description: (payload: { id: string; key: 'description'; value: string }) => void
+    description: (payload: {
+      id: string
+      key: 'description'
+      value: string
+    }) => void
     status: (payload: { id: string; key: 'status'; value: TStatus }) => void
   }
   announcement: {
     name: (payload: { id: string; key: 'name'; value: string }) => void
-    description: (payload: { id: string; key: 'description'; value: string }) => void
+    description: (payload: {
+      id: string
+      key: 'description'
+      value: string
+    }) => void
   }
   participant: {
     access: (payload: { id: string; key: 'access'; value: boolean }) => void
@@ -156,4 +252,9 @@ interface IUpdate {
 
 export default IUseClientStore
 
-type IParticipantKey = 'taskId' | 'todoId' | 'suggestionId' | 'fileId' | 'announcementId'
+type IParticipantKey =
+  | 'taskId'
+  | 'todoId'
+  | 'suggestionId'
+  | 'fileId'
+  | 'announcementId'

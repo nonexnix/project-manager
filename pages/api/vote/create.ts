@@ -10,6 +10,7 @@ const handler: THandler = async (request, response) => {
     try {
       await prisma.vote.create({
         data: {
+          id: body.id,
           mark: body.mark,
           memberId: body.memberId,
           suggestionId: body.suggestionId,

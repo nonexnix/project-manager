@@ -7,6 +7,7 @@ import Role from '../role/role'
 import Profile from './profile'
 import useClientStore from '../../library/stores/client'
 import GiveAuthorization from '../modals/create-authorization'
+import CreatePermissionModal from '../modals/create-permission'
 
 interface IProps {
   user: IUser
@@ -26,6 +27,7 @@ const Member = ({
 }: IProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [giveAuthorization, setGiveAuthorization] = useState(false)
+  const [givePermission, setGivePermission] = useState(false)
   const kickMember = useClientStore((state) => state.update.member.active)
 
   return (
@@ -63,6 +65,19 @@ const Member = ({
                   memberId={memberId}
                   authorizations={member.authorizations!}
                 />
+              )}
+
+              {/* Edit Permission */}
+              <button onClick={() => setGivePermission(!givePermission)}>
+                <Linker
+                  name={'Edit Permission'}
+                  link={'#'}
+                  style={'py-4 px-8 hover:bg-snow transition-all duration-300'}
+                />
+              </button>
+
+              {givePermission && (
+                <CreatePermissionModal handler={() => setGivePermission(!givePermission)}/>
               )}
 
               {/* Kick Member */}

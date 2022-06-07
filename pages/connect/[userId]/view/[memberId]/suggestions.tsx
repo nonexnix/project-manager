@@ -48,6 +48,7 @@ const Suggestions: NextPage<IProps> = ({
 
   if (!ready) return <></>
 
+
   const handlePostSubmission = () => {
     postSuggestion({
       name: suggestionField.value.name,
@@ -91,7 +92,7 @@ const Suggestions: NextPage<IProps> = ({
                 <div className="grid gap-5 bg-white py-5 px-8">
                   <input
                     type="text"
-                    placeholder={"Enter Suggestion Title"}
+                    placeholder={"Suggestion Title"}
                     className="border-none bg-white py-2 pl-2 outline-none focus-none"
                     value={suggestionField.value.name}
                     onChange={(e) =>
@@ -211,7 +212,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             include: {
               user: true
             }
-          }
+          },
         },
       },
       files: true,
