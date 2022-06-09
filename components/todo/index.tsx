@@ -32,7 +32,7 @@ const Todo = ({ todo, index }: IProps) => {
 
               <div className="grid gap-4">
                 {/* name, priority */}
-                <div className="grid grid-cols-[1fr,auto] items-center border-4">
+                <div className="grid grid-cols-[1fr,auto] items-center">
                   <div className="text-lg lg:text-xl font-semibold">
                     {todo?.name}
                   </div>
@@ -88,9 +88,8 @@ const Todo = ({ todo, index }: IProps) => {
             />
             <button onClick={() => setIsEdit(!isEdit)}>
               <PencilAltIcon  className='text-blue w-5 h-5 hover:scale-125 transition-all duration-300'/>
-
-              {isEdit && <EditTodoModal todo={todo} cancelBtn={() => setIsEdit(!isEdit)}/>}
             </button>
+              {isEdit && <EditTodoModal todo={todo} cancelBtn={() => setIsEdit(false)}/>}
           </div>
 
           <div className="bg-white shadow-md shadow-violet py-3 px-6 grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] gap-10 items-center hover:bg-snow transition-all duration-300 cursor-pointer group">
@@ -137,7 +136,7 @@ const Todo = ({ todo, index }: IProps) => {
 
             <div className="absolute right-0 -inset-y-1/2 translate-y-[50%] bg-red-600 grid items-center justify-center h-full w-0 group-hover:w-24 transition-all duration-300">
               <button onClick={() => deleteTodo({ id: todo.id })}>
-                <TrashIcon className="text-white w-6 h-6" />
+                <TrashIcon className="text-white w-6 h-6"/>
               </button>
             </div>
           </div>
