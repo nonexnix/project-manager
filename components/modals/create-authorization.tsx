@@ -49,16 +49,8 @@ const GiveAuthorization = ({
 
   const [roles, setRoles] = useState(modifiedRoles(authorizations))
 
-  console.log(roles)
-
-  // map project roles
-  // return Roles
-  // for loop of authorizations[]
-  // if authorization in authorizations === project roles
-  // return role if checked
-
   return (
-    <div className="fixed inset-0">
+    <div className="fixed inset-0 z-50">
       <div className="bg-white max-w-5xl relative inset-2/4 -translate-x-1/2 -translate-y-1/2 shadow-xl shadow-violet px-10 py-6 z-50 grid">
         {/* title logo*/}
         <div className="flex items-center gap-3">
