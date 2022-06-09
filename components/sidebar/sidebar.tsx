@@ -33,7 +33,14 @@ const Sidebar = ({userId, memberId}:IProps) => {
           'py-4 px-16 hover:bg-snow transition-all duration-300'
         }
       />
-
+      {/* roles */}
+      <Linker
+        name={'Roles'}
+        link={`/connect/${userId}/view/${memberId}/roles`}
+        style={
+          'py-4 px-16 hover:bg-snow transition-all duration-300'
+        }
+      />
       {/* files */}
       <Linker
         name={'Files'}
