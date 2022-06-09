@@ -30,7 +30,7 @@ const CreateTodoModal = ({ handler, taskId }: IProps) => {
   }
 
   return (
-    <div className="fixed inset-0">
+    <div className="fixed inset-0 z-50">
       <div className="bg-white max-w-7xl relative inset-2/4 -translate-x-1/2 -translate-y-1/2 shadow-xl shadow-violet px-10 py-6 z-50">
         {/* title logo */}
         <div className="flex items-center gap-3">
@@ -99,7 +99,7 @@ const CreateTodoModal = ({ handler, taskId }: IProps) => {
             >
               Cancel
             </button>
-            <Button name="Create New Task" color={'bg-blue'} handler={handleCreateTodoButton}/>
+            <Button name="Create New Todo" color={'bg-blue'} handler={handleCreateTodoButton}/>
           </div>
         </div>
       </div>

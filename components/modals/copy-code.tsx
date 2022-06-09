@@ -7,7 +7,7 @@ interface IProps {
 }
 const ProjectCodeModal = ({handler, code}:IProps) => {
   return (
-    <div className="fixed inset-0">
+    <div className="fixed inset-0 z-50">
       <div className="bg-white max-w-7xl relative inset-2/4 -translate-x-1/2 -translate-y-1/2 shadow-xl shadow-violet px-10 py-6 z-50">
         {/* title logo and close btn*/}
         <div className='grid grid-cols-[1fr,auto] items-center'>
