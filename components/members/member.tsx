@@ -7,7 +7,7 @@ import Role from '../role/role'
 import Profile from './profile'
 import useClientStore from '../../library/stores/client'
 import GiveAuthorization from '../modals/create-authorization'
-import CreatePermissionModal from '../modals/create-permission'
+import UpdatePermissionModal from '../modals/update-permission'
 
 interface IProps {
   user: IUser
@@ -29,6 +29,8 @@ const Member = ({
   const [giveAuthorization, setGiveAuthorization] = useState(false)
   const [givePermission, setGivePermission] = useState(false)
   const kickMember = useClientStore((state) => state.update.member.active)
+
+  console.log(project)
 
   return (
     <div className="bg-white shadow-md shadow-violet grid gap-5 hover:-translate-y-2 transition-all duration-500 px-5 py-4">
@@ -65,19 +67,6 @@ const Member = ({
                   memberId={memberId}
                   authorizations={member.authorizations!}
                 />
-              )}
-
-              {/* Edit Permission */}
-              <button onClick={() => setGivePermission(!givePermission)}>
-                <Linker
-                  name={'Edit Permission'}
-                  link={'#'}
-                  style={'py-4 px-8 hover:bg-snow transition-all duration-300'}
-                />
-              </button>
-
-              {givePermission && (
-                <CreatePermissionModal handler={() => setGivePermission(!givePermission)}/>
               )}
 
               {/* Kick Member */}
