@@ -243,7 +243,7 @@ const Dashboard: NextPage<IProps> = ({
                     </p>
 
                     {/* user's contribution and copy code */}
-                    <div className="flex gap-10 items-center mb-28 lg:mb-16">
+                    <div className="flex gap-10 items-center mb-20 lg:mb-16">
                       <IconLabel
                         icon={<CollectionIcon />}
                         label={project?.tasks?.length}
