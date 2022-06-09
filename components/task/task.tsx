@@ -6,10 +6,10 @@ import Profile from '../members/profile'
 interface IProps {
   task: any
   index: number
-  userId:string
+  userId: string
   memberId: string
 }
-const Task = ({ task, index, userId, memberId}: IProps) => {
+const Task = ({ task, index, userId, memberId }: IProps) => {
   return (
     <Link href={`/connect/${userId}/view/${memberId}/task/${task.id}`}>
       <div>
@@ -54,6 +54,17 @@ const Task = ({ task, index, userId, memberId}: IProps) => {
                     )}
                   </div>
                 </div>
+
+                {/* completeness */}
+                {task?.over === true ? (
+                  <h1 className="text-green-600 font-bold tracking-wide ml-auto">
+                    Completed
+                  </h1>
+                ) : (
+                  <h1 className="text-red-600 font-bold tracking-wide ml-auto">
+                    Incomplete
+                  </h1>
+                )}
               </div>
             </WhiteCard>
           </div>
@@ -61,7 +72,7 @@ const Task = ({ task, index, userId, memberId}: IProps) => {
 
         {/* for laptops */}
         <div className="hidden lg:block">
-          <div className="bg-white shadow-md shadow-violet py-3 px-6 grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] gap-10 items-center hover:bg-snow hover:-translate-y-1 taransition-all duration-300 cursor-pointer">
+          <div className="bg-white shadow-md shadow-violet py-3 px-6 grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr] gap-10 items-center hover:bg-snow hover:-translate-y-1 taransition-all duration-300 cursor-pointer">
             {/* number */}
             <h1 className="font-semibold">{index}</h1>
 
@@ -92,6 +103,17 @@ const Task = ({ task, index, userId, memberId}: IProps) => {
             <div className="text-sm leading-relaxed whitespace-nowrap">
               {String(phase(task.dueAt, 'LL'))}
             </div>
+
+            {/* completeness */}
+            {task?.over === true ? (
+              <h1 className="text-green-600 font-bold tracking-wide">
+                Completed
+              </h1>
+            ) : (
+              <h1 className="text-red-600 font-bold tracking-wide">
+                Incomplete
+              </h1>
+            )}
           </div>
         </div>
       </div>
