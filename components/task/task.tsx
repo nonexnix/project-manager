@@ -1,6 +1,12 @@
+import { TrashIcon } from '@heroicons/react/outline'
+import { DotsHorizontalIcon, DotsVerticalIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
+import { useState } from 'react'
+import useClientStore from '../../library/stores/client'
 import phase from '../../library/utilities/phase'
 import WhiteCard from '../card/white-card'
+import Icon from '../icon/icon'
+import Linker from '../link/link'
 import Profile from '../members/profile'
 
 interface IProps {
@@ -10,6 +16,10 @@ interface IProps {
   memberId: string
 }
 const Task = ({ task, index, userId, memberId }: IProps) => {
+  const deleteTask = useClientStore((state) => state.delete.task)
+  const completeTask = useClientStore((state) => state.update.task.over)
+  const [isOpenOption, setIsOpenOption] = useState(false)
+
   return (
     <Link href={`/connect/${userId}/view/${memberId}/task/${task.id}`}>
       <div>
@@ -71,8 +81,8 @@ const Task = ({ task, index, userId, memberId }: IProps) => {
         </div>
 
         {/* for laptops */}
-        <div className="hidden lg:block">
-          <div className="bg-white shadow-md shadow-violet py-3 px-6 grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr] gap-10 items-center hover:bg-snow hover:-translate-y-1 taransition-all duration-300 cursor-pointer">
+        <div className="hidden lg:block group relative">
+          <div className="bg-white shadow-md shadow-violet py-3 px-6 grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto] gap-10 items-center hover:bg-snow hover:-translate-y-1 taransition-all duration-300 cursor-pointer">
             {/* number */}
             <h1 className="font-semibold">{index}</h1>
 
@@ -113,6 +123,70 @@ const Task = ({ task, index, userId, memberId }: IProps) => {
               <h1 className="text-red-600 font-bold tracking-wide">
                 Incomplete
               </h1>
+            )}
+
+            <button onClick={() => setIsOpenOption(!isOpenOption)}>
+              <Icon icon={<DotsHorizontalIcon />} />
+            </button>
+
+            {isOpenOption && (
+              <div className="absolute top-11 right-7 bg-white shadow-md shadow-violet grid z-50">
+                {/* Set as done */}
+                {task.over === true ? (
+                  <button
+                    onClick={() =>
+                      completeTask({
+                        id: task.id,
+                        key: 'over',
+                        value: false,
+                      })
+                    }
+                  >
+                    <Linker
+                      name={'Set as Incomplete'}
+                      link={'#'}
+                      style={
+                        'py-4 px-8 hover:bg-snow transition-all duration-300'
+                      }
+                    />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() =>
+                      completeTask({
+                        id: task.id,
+                        key: 'over',
+                        value: true,
+                      })
+                    }
+                  >
+                    <Linker
+                      name={'Set as Done'}
+                      link={'#'}
+                      style={
+                        'py-4 px-8 hover:bg-snow transition-all duration-300'
+                      }
+                    />
+                  </button>
+                )}
+
+                {/* Delete Task */}
+                <button
+                  onClick={() =>
+                    deleteTask({
+                      id: task.id,
+                    })
+                  }
+                >
+                  <Linker
+                    name={'Delete Task'}
+                    link={'#'}
+                    style={
+                      'py-4 px-8 hover:bg-snow transition-all duration-300'
+                    }
+                  />
+                </button>
+              </div>
             )}
           </div>
         </div>
