@@ -82,15 +82,12 @@ const Task = ({ task, index, userId, memberId }: IProps) => {
 
         {/* for laptops */}
         <div className="hidden lg:block group relative">
-          <div className="bg-white shadow-md shadow-violet py-3 px-6 grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto] gap-10 items-center hover:bg-snow hover:-translate-y-1 taransition-all duration-300 cursor-pointer">
+          <div className="bg-white shadow-md shadow-violet py-3 px-6 grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,auto] gap-10 items-center hover:bg-slate-200/50 transition-all duration-300 cursor-pointer">
             {/* number */}
             <h1 className="font-semibold">{index}</h1>
 
             {/* task name */}
             <h1 className="leading-relaxed whitespace-nowrap">{task?.name}</h1>
-
-            {/* head task */}
-            <Profile />
 
             {/* Task Members */}
             <div className="flex items-center gap-3 ml-3">
@@ -115,16 +112,22 @@ const Task = ({ task, index, userId, memberId }: IProps) => {
             </div>
 
             {/* completeness */}
-            {task?.over === true ? (
-              <h1 className="text-green-600 font-bold tracking-wide">
-                Completed
-              </h1>
+            {String(phase(Date.now(), 'LL')) >
+            String(phase(task?.dueAt, 'LL')) ? (
+              <h1 className="text-red-600 font-bold tracking-wide">Overdue</h1>
             ) : (
-              <h1 className="text-red-600 font-bold tracking-wide">
-                Incomplete
-              </h1>
+              <div>
+                {task!.over === true ? (
+                  <h1 className="text-green-600 font-bold tracking-wide">
+                    Completed
+                  </h1>
+                ) : (
+                  <h1 className="text-red-600 font-bold tracking-wide">
+                    Incomplete
+                  </h1>
+                )}
+              </div>
             )}
-
             <button onClick={() => setIsOpenOption(!isOpenOption)}>
               <Icon icon={<DotsHorizontalIcon />} />
             </button>
