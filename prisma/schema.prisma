@@ -196,9 +196,9 @@ model Suggestion {
 model Vote {
   id           String     @id @default(cuid())
   mark         String
-  member       Member     @relation(fields: [memberId], references: [id])
+  member       Member     @relation(fields: [memberId], references: [id], onDelete: Cascade)
   memberId     String
-  suggestion   Suggestion @relation(fields: [suggestionId], references: [id])
+  suggestion   Suggestion @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
   suggestionId String
 
   @@unique([memberId, suggestionId])
@@ -241,7 +241,7 @@ model Participant {
   memberId       String
   task           Task?         @relation(fields: [taskId], references: [id], onDelete: Cascade)
   taskId         String?
-  todo           Todo?         @relation(fields: [todoId], references: [id])
+  todo           Todo?         @relation(fields: [todoId], references: [id], onDelete: Cascade)
   todoId         String?
   suggestion     Suggestion?   @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
   suggestionId   String?
