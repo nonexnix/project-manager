@@ -25,7 +25,8 @@ interface IProps {
   member: IMember
 }
 
-const Project = ({ member }: IProps) => {
+const Project = ({ member}: IProps) => {
+  const user = useClientStore((state) => state.user)
   const [isOpenOption, setIsOpenOption] = useState(false)
   const deleteProject = useClientStore((state) => state.delete.project)
   const completeProject = useClientStore((state) => state.update.project.over)
@@ -33,10 +34,11 @@ const Project = ({ member }: IProps) => {
     (state) => state.update.member?.active
   )
   const [copyCode, setCopyCode] = useState(false)
+  const router = useRouter()
   return (
     <div>
       <Link href={`/connect/${member?.userId}/view/${member.id}/dashboard`}>
-        <div className="lg:w-[500px] cursor-pointer hover:-translate-y-2 transiton-all duration-500">
+        <div className="cursor-pointer hover:-translate-y-2 transiton-all duration-500">
           <WhiteCard>
             <div className="grid gap-4">
               <div className="grid grid-cols-[1fr,auto] items-center">
@@ -112,7 +114,11 @@ const Project = ({ member }: IProps) => {
                     )}
 
                     {/* Delete Project */}
-                    <button onClick={() => deleteProject({ id: member.id })}>
+                    <button onClick={ async () => {
+                        await deleteProject({ id: member.projectId })
+                        router.push(`/connect/${user.id}`)
+                      
+                      }}>
                       <Linker
                         name={'Delete Project'}
                         link={'#'}
@@ -185,8 +191,7 @@ const Project = ({ member }: IProps) => {
                   {String(phase(member!.project!.dueAt, 'LL'))}
                 </div>
                 {/* completeness */}
-                {/* completeness */}
-                {String(phase(Date.now(), 'LL')) >
+                {String(phase(new Date(), 'LL')) >
                 String(phase(member.project?.dueAt!, 'LL')) ? (
                   <h1 className="text-red-600 font-bold tracking-wide">
                     Overdue
