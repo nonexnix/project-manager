@@ -87,9 +87,11 @@ const Todo = ({ todo, index }: IProps) => {
               }
             />
             <button onClick={() => setIsEdit(!isEdit)}>
-              <PencilAltIcon  className='text-blue w-5 h-5 hover:scale-125 transition-all duration-300'/>
+              <PencilAltIcon className="text-blue w-5 h-5 hover:scale-125 transition-all duration-300" />
             </button>
-              {isEdit && <EditTodoModal todo={todo} cancelBtn={() => setIsEdit(false)}/>}
+            {isEdit && (
+              <EditTodoModal todo={todo} cancelBtn={() => setIsEdit(false)} />
+            )}
           </div>
 
           <div className="bg-white shadow-md shadow-violet py-3 px-6 grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] gap-10 items-center hover:bg-snow transition-all duration-300 cursor-pointer group">
@@ -124,19 +126,25 @@ const Todo = ({ todo, index }: IProps) => {
             </div>
 
             {/* todo Completeness */}
-            {todo?.over === true ? (
-              <h1 className="text-green-600 font-bold tracking-wide">
-                Completed
-              </h1>
+            {String(phase(Date.now(), 'LL')) >
+            String(phase(todo?.dueAt, 'LL')) ? (
+              <h1 className="text-red-600 font-bold tracking-wide">Overdue</h1>
             ) : (
-              <h1 className="text-red-600 font-bold tracking-wide">
-                Incomplete
-              </h1>
+              <div>
+                {todo!.over === true ? (
+                  <h1 className="text-green-600 font-bold tracking-wide">
+                    Completed
+                  </h1>
+                ) : (
+                  <h1 className="text-red-600 font-bold tracking-wide">
+                    Incomplete
+                  </h1>
+                )}
+              </div>
             )}
-
             <div className="absolute right-0 -inset-y-1/2 translate-y-[50%] bg-red-600 grid items-center justify-center h-full w-0 group-hover:w-24 transition-all duration-300">
               <button onClick={() => deleteTodo({ id: todo.id })}>
-                <TrashIcon className="text-white w-6 h-6"/>
+                <TrashIcon className="text-white w-6 h-6" />
               </button>
             </div>
           </div>
