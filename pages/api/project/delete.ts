@@ -7,6 +7,7 @@ type THandler = (request: NextApiRequest, response: NextApiResponse) => void
 const handler: THandler = async (request, response) => {
   if (request.method === 'DELETE') {
     const body = JSON.parse(request.body)
+    console.log(body)
     try {
       await prisma.project.delete({ where: { id: body.id } })
       response.status(200).json(postman(200))
