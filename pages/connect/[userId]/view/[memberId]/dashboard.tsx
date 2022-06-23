@@ -197,7 +197,6 @@ const Dashboard: NextPage<IProps> = ({
                             />
                           )}
 
-
                           {/* Delete Project */}
                           <button
                             onClick={() => {
@@ -271,14 +270,23 @@ const Dashboard: NextPage<IProps> = ({
                           {String(phase(initialProject?.dueAt, 'LL'))}
                         </div>
                         {/* completeness */}
-                        {project?.over === true ? (
-                          <h1 className="text-green-600 font-bold tracking-wide">
-                            Completed
+                        {String(phase(Date.now(), 'LL')) >
+                        String(phase(initialProject?.dueAt, 'LL')) ? (
+                          <h1 className="text-red-600 font-bold tracking-wide">
+                            Overdue
                           </h1>
                         ) : (
-                          <h1 className="text-red-600 font-bold tracking-wide">
-                            Incomplete
-                          </h1>
+                          <div>
+                            {project!.over === true ? (
+                              <h1 className="text-green-600 font-bold tracking-wide">
+                                Completed
+                              </h1>
+                            ) : (
+                              <h1 className="text-red-600 font-bold tracking-wide">
+                                Incomplete
+                              </h1>
+                            )}
+                          </div>
                         )}
                       </div>
                       {/* Create Task Button */}
@@ -308,6 +316,15 @@ const Dashboard: NextPage<IProps> = ({
                   </span>
                   )
                 </h1>
+
+                <div className="grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,auto] gap-10 items-center text-sm tracking-wide font-semibold">
+                  <h1>No.</h1>
+                  <h1>Title</h1>
+                  <h1>Participants</h1>
+                  <h1 className="text-center">Priority</h1>
+                  <h1>Due Date</h1>
+                  <h1>Completeness</h1>
+                </div>
                 {/* all users' project */}
                 <div className="grid gap-3">
                   {project?.tasks?.map((task, index) => (
