@@ -14,10 +14,12 @@ import phase from '../../library/utilities/phase'
 import Link from 'next/link'
 import { IMember } from '../../library/schemas/interfaces'
 import Linker from '../link/link'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import useClientStore from '../../library/stores/client'
 import Icon from '../icon/icon'
+import { DotsHorizontalIcon } from '@heroicons/react/solid'
+import ProjectCodeModal from '../modals/copy-code'
 
 interface IProps {
   member: IMember
@@ -30,7 +32,7 @@ const Project = ({ member }: IProps) => {
   const updateMembership = useClientStore(
     (state) => state.update.member?.active
   )
-
+  const [copyCode, setCopyCode] = useState(false)
   return (
     <div>
       <Link href={`/connect/${member?.userId}/view/${member.id}/dashboard`}>
@@ -43,9 +45,13 @@ const Project = ({ member }: IProps) => {
                   {member?.project?.name}
                 </div>
 
-                <button onClick={() => setIsOpenOption(!isOpenOption)}>
-                  <Icon icon={<MenuIcon />} />
+                <button
+                  className="absolute right-4 top-3"
+                  onClick={() => setIsOpenOption(!isOpenOption)}
+                >
+                  <Icon icon={<DotsHorizontalIcon />} />
                 </button>
+
                 {isOpenOption && (
                   <div className="absolute top-11 right-7 bg-white shadow-md shadow-violet grid z-50">
                     {/* Set as done */}
@@ -87,13 +93,26 @@ const Project = ({ member }: IProps) => {
                       </button>
                     )}
 
+                    {/* Copy Code */}
+                    <button onClick={() => setCopyCode(!copyCode)}>
+                      <Linker
+                        name={'Copy Code'}
+                        link={'#'}
+                        style={
+                          'py-4 px-8 hover:bg-snow transition-all duration-300'
+                        }
+                      />
+                    </button>
+
+                    {copyCode && (
+                      <ProjectCodeModal
+                        handler={() => setCopyCode(!copyCode)}
+                        code={member.project!.code}
+                      />
+                    )}
+
                     {/* Delete Project */}
-                    <button
-                      onClick={() => {
-                        deleteProject({ id: member!.project!.id })
-                        Router.push(`/connect/${member!.user!.id}`)
-                      }}
-                    >
+                    <button onClick={() => deleteProject({ id: member.id })}>
                       <Linker
                         name={'Delete Project'}
                         link={'#'}
@@ -105,14 +124,13 @@ const Project = ({ member }: IProps) => {
 
                     {/* Leave Project */}
                     <button
-                      onClick={() => {
+                      onClick={() =>
                         updateMembership({
                           id: member?.id,
                           key: 'active',
                           value: false,
                         })
-                        Router.push(`/connect/${member!.user!.id}`)
-                      }}
+                      }
                     >
                       <Linker
                         name={'Leave Project'}
