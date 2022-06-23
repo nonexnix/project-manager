@@ -185,14 +185,24 @@ const Project = ({ member }: IProps) => {
                   {String(phase(member!.project!.dueAt, 'LL'))}
                 </div>
                 {/* completeness */}
-                {member.project?.over === true ? (
-                  <h1 className="text-green-600 font-bold tracking-wide">
-                    Completed
+                {/* completeness */}
+                {String(phase(Date.now(), 'LL')) >
+                String(phase(member.project?.dueAt!, 'LL')) ? (
+                  <h1 className="text-red-600 font-bold tracking-wide">
+                    Overdue
                   </h1>
                 ) : (
-                  <h1 className="text-red-600 font-bold tracking-wide">
-                    Incomplete
-                  </h1>
+                  <div>
+                    {member.project!.over === true ? (
+                      <h1 className="text-green-600 font-bold tracking-wide">
+                        Completed
+                      </h1>
+                    ) : (
+                      <h1 className="text-red-600 font-bold tracking-wide">
+                        Incomplete
+                      </h1>
+                    )}
+                  </div>
                 )}
               </div>
             </SnowCard>
