@@ -3,20 +3,20 @@ import Icon from './icon/icon'
 import Linker from './link/link'
 import { useState } from 'react'
 import Button from './button/button'
+import Link from 'next/link'
 
 interface IProps {
-  firstName:string
-  lastName:string
-  id:string
+  firstName: string
+  lastName: string
+  id: string
 }
 
-const Header = ({firstName, lastName, id} : IProps) => {
+const Header = ({ firstName, lastName, id }: IProps) => {
   const [open, setOpen] = useState(false)
 
   return (
     <header>
       <div className="area bg-white shadow-md shadow-violet grid grid-flow-col items-center">
-        {/* title */}
         <h1 className="font-bold text-blue text-sm md:text-lg whitespace-nowrap">
           PCU Teams
         </h1>
@@ -24,13 +24,17 @@ const Header = ({firstName, lastName, id} : IProps) => {
         <div className="ml-auto md:hidden">
           <div className="relative grid grid-flow-col items-center gap-6">
             {/* name */}
-            <h1 className='text-sm text-blue font-semibold'>Hi! <span className="font-bold">{firstName} {lastName}</span></h1>
-            
+            <h1 className="text-sm text-blue font-semibold">
+              Hi!{' '}
+              <span className="font-bold">
+                {firstName} {lastName}
+              </span>
+            </h1>
+
             {/* profile */}
             <div className="w-10 h-10 border-[1px] border-gray-200 rounded-full grid items-center justify-center">
               <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
             </div>
-
 
             {/* logout */}
             <button onClick={() => setOpen(!open)}>
@@ -58,15 +62,19 @@ const Header = ({firstName, lastName, id} : IProps) => {
             </div>
 
             {/* name */}
-            <h1 className='text-sm text-blue font-semibold'>Hi! <span className="font-bold">{firstName} {lastName}</span></h1>
+            <h1 className="text-sm text-blue font-semibold">
+              Hi!{' '}
+              <span className="font-bold">
+                {firstName} {lastName}
+              </span>
+            </h1>
 
             {/* user profile */}
             <div className="w-10 h-10 border-[1px] border-gray-200 rounded-full grid items-center justify-center">
               <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
             </div>
 
-            
-            <Button name={'Logout'} color={'bg-pink'}/>
+            <Button name={'Logout'} color={'bg-pink'} />
           </div>
         </div>
       </div>
