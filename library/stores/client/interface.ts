@@ -2,6 +2,7 @@ import type {
   IMember,
   IMessage,
   IProject,
+  ITask,
   IUser,
 } from '../../schemas/interfaces'
 import type {
@@ -16,6 +17,7 @@ interface IUseClientStore {
   user: IUser
   member: IMember
   project: IProject
+  task: ITask
   messages: IMessage[]
   loader: boolean
   read: IRead
@@ -28,6 +30,7 @@ interface IRead {
   user: (payload: IUser) => void
   member: (payload: IMember) => void
   project: (payload: IProject) => void
+  task: (payload: ITask) => void
   messages: (payload: IMessage[]) => void
 }
 

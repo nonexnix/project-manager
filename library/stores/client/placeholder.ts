@@ -1,6 +1,6 @@
-import type { IMember, IMessage, IProject, IUser } from '../../schemas/interfaces'
+import type { IMember, IMessage, IProject, ITask, IUser } from '../../schemas/interfaces'
 
-const placeholder: { user: IUser; member: IMember; project: IProject; messages: IMessage[] } = {
+const placeholder: { user: IUser; member: IMember; project: IProject; task:ITask; messages: IMessage[] } = {
   user: {
     id: '',
     email: '',
@@ -31,6 +31,19 @@ const placeholder: { user: IUser; member: IMember; project: IProject; messages: 
     updatedAt: '',
     dueAt: '',
     userId: '',
+  },
+  task: {
+    id: '',
+    name: '',
+    description: '',
+    over: false,
+    createdAt: '',
+    updatedAt: '',
+    dueAt: '',
+    rate: 10,
+    memberId: '',
+    projectId: '',
+    priority: 'LOW'
   },
   messages: [],
 }

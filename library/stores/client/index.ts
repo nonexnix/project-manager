@@ -8,12 +8,14 @@ const useClientStore = create<IUseClientStore>((set, get) => ({
   member: placeholder.member,
   project: placeholder.project,
   messages: placeholder.messages,
+  task: placeholder.task,
   loader: false,
   read: {
     user: (payload) => set({ user: payload }),
     member: (payload) => set({ member: payload }),
     project: (payload) => set({ project: payload }),
     messages: (payload) => set({ messages: payload }),
+    task: (payload) => set({task: payload })
   },
   create: {
     user: async (payload) => {
