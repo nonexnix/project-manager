@@ -1,12 +1,19 @@
-import type { NextPage } from 'next'
-import Foundation from '../components/foundation'
+import { useSession, signIn, signOut } from "next-auth/react";
 
-const Landing: NextPage = () => {
+export default function Component() {
+  const { data: session } = useSession();
+  if (session) {
+    return (
+      <>
+        Signed in as {session!.user!.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    );
+  }
   return (
-    <Foundation title="Vision">
-      <h1>Welcome to Vision</h1>
-    </Foundation>
-  )
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn("google")}>Sign in</button>
+    </>
+  );
 }
-
-export default Landing
