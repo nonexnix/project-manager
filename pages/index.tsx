@@ -1,16 +1,20 @@
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { ArrowRightIcon } from '@heroicons/react/solid'
+import { GetServerSideProps } from 'next'
+import { useSession, signIn, signOut, getSession } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import { IUser } from '../library/schemas/interfaces'
+import useClientStore from '../library/stores/client'
+import objectified from '../library/utilities/objectified'
 
-export default function Component() {
+interface IProps {
+  user: IUser
+}
+
+export default function Component({ user }: IProps) {
   const { data: session } = useSession()
-  if (session) {
-    return (
-      <>
-        Signed in as {session!.user!.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    )
-  }
+  console.log(user)
   return (
     <div className="h-screen bg-white grid grid-rows-[1fr,auto] relative bg-[url('/images/bg.jpg')] bg-no-repeat">
       {/* headings */}
@@ -20,9 +24,21 @@ export default function Component() {
         </div>
 
         {/* button */}
-        <button onClick={() => signIn('google')} className="w-96 h-32 relative hover:-translate-y-1 transition-all duration-500 cursor-pointer">
-          <Image src="/images/button.png" layout="fill" objectFit="contain" />
-        </button>
+        {!session ? (
+          <button
+            onClick={() => signIn('google')}
+            className="w-96 h-32 relative hover:-translate-y-1 transition-all duration-500 cursor-pointer"
+          >
+            <Image src="/images/button.png" layout="fill" objectFit="contain" />
+          </button>
+        ) : (
+          <Link href={`/connect/${user.id}`}>
+            <a className="bg-white rounded-md flex items-center gap-5">
+              <span className="text-2xl font-semibold">GO TO DASHBOARD</span>
+              <ArrowRightIcon className="w-8 h-8 text-[#0099FF]" />
+            </a>
+          </Link>
+        )}
       </div>
 
       {/* ellipses */}
@@ -33,4 +49,25 @@ export default function Component() {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context)
+  if(!session) {
+    return {
+      props: {
+        session
+      }
+    }
+  }
+  const user = await prisma.user.findUnique({
+    where: { email: session?.user?.email?.toString()},
+  })
+
+  return {
+    props: {
+      session,
+      user:objectified(user),
+    },
+  }
 }

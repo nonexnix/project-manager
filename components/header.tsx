@@ -3,7 +3,8 @@ import Icon from './icon/icon'
 import Linker from './link/link'
 import { useState } from 'react'
 import Button from './button/button'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { signOut } from 'next-auth/react'
 
 interface IProps {
   fullname?: string
@@ -13,8 +14,8 @@ interface IProps {
   id: string
 }
 
-const Header = ({ fullname, firstName, lastName, image, id }: IProps) => {
-  const [open, setOpen] = useState(false)
+const Header = ({ fullname, image }: IProps) => {
+  const router = useRouter()
 
   return (
     <header>
@@ -22,39 +23,6 @@ const Header = ({ fullname, firstName, lastName, image, id }: IProps) => {
         <h1 className="font-bold text-blue text-sm md:text-lg whitespace-nowrap">
           PCU Teams
         </h1>
-
-        <div className="ml-auto md:hidden">
-          <div className="relative grid grid-flow-col items-center gap-6">
-            {/* name */}
-            <h1 className="text-sm text-blue font-semibold">
-              Hi!{' '}
-              <span className="font-bold">
-                {firstName} {lastName}
-              </span>
-            </h1>
-
-            {/* profile */}
-            <div className="w-10 h-10 border-[1px] border-gray-200 rounded-full grid items-center justify-center">
-              <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
-            </div>
-
-            {/* logout */}
-            <button onClick={() => setOpen(!open)}>
-              <Icon icon={<MenuIcon />} />
-            </button>
-          </div>
-
-          {open && (
-            <div className="absolute right-5 z-50 bg-white shadow-md shadow-gray-200 grid items-center">
-              <div className="hover:bg-snow px-5 py-3 transition-all duration-500">
-                <Linker name={'All Projects'} link={`/connect/${id}`} />
-              </div>
-              <div className="hover:bg-snow px-5 py-3 transition-all duration-500">
-                <Linker name={'Logout'} link={'/'} />{' '}
-              </div>
-            </div>
-          )}
-        </div>
 
         <div className="hidden md:block md:ml-auto">
           <div className="grid grid-flow-col gap-6 items-center ">
@@ -75,7 +43,14 @@ const Header = ({ fullname, firstName, lastName, image, id }: IProps) => {
               </div>
             </div>
 
-            <Button name={'Logout'} color={'bg-pink'} />
+            <Button
+              name={'Logout'}
+              color={'bg-pink'}
+              handler={() => {
+                signOut()
+                router.push('/')
+              }}
+            />
           </div>
         </div>
       </div>
