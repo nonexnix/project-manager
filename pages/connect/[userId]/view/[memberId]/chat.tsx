@@ -80,11 +80,7 @@ const Chatbox = ({ initialUser, initialMember, initialProject }: IProps) => {
     <Foundation title="Project Team Chat">
       <Layout>
         <Header
-          firstName={
-            user.firstName[0].toUpperCase() + user.firstName.slice(1)
-          }
-          lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
-          id={user.id}
+          fullname={user.name} image={user.image} id={user.id}
         />
         <Main>
           <section>

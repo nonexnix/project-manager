@@ -20,7 +20,6 @@ import Icon from '../../../../../../components/icon/icon'
 import { CalendarIcon, MenuAlt1Icon } from '@heroicons/react/outline'
 import phase from '../../../../../../library/utilities/phase'
 import Member from '../../../../../../components/members/delete-member'
-import Roles from '../../../../../../components/role/roles'
 import Sidebar from '../../../../../../components/sidebar/sidebar'
 
 interface IProps {
@@ -60,9 +59,7 @@ const EditProject: NextPage<IProps> = ({
     <Foundation title="Edit Project">
       <Layout>
         <Header
-          firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
-          lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
-          id={user.id}
+          fullname={user.name} image={user.image} id={user.id}
         />
         <Main>
           <section className="bg-snow grid gap-5 max-w-7xl mx-auto">

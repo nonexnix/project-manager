@@ -66,9 +66,7 @@ const Task: NextPage<IProps> = ({
     <Foundation title="Project Task">
       <Layout>
         <Header
-          firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
-          lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
-          id={user.id}
+          fullname={user.name} image={user.image} id={user.id}
         />
         <Main>
           <section>
@@ -180,7 +178,7 @@ const Task: NextPage<IProps> = ({
                         </div>
 
                         {/* completeness */}
-                        {String(phase(Date.now(), 'LL')) >
+                        {String(phase(new Date(), 'LL')) >
                         String(phase(task?.dueAt, 'LL')) ? (
                           <h1 className="text-red-600 font-bold tracking-wide">
                             Overdue
