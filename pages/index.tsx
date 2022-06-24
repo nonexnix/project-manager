@@ -14,6 +14,24 @@ interface IProps {
 
 export default function Component({ user }: IProps) {
   const { data: session } = useSession()
+  const updateUserFirstName = useClientStore((state) => state.update.user.firstName)
+  const updateUserLastName = useClientStore((state) => state.update.user.lastName)
+
+  useEffect(() => {
+    if (session) {
+      updateUserFirstName({
+        id: user.id,
+        key: 'firstName',
+        value: user.name.split(' ').slice(0, -1).join(' '),
+      })
+
+      updateUserLastName({
+        id: user.id,
+        key: 'lastName',
+        value: user.name.split(' ').slice(-1).join(' '),
+      })
+    }
+  }, [session])
   console.log(user)
   return (
     <div className="h-screen bg-white grid grid-rows-[1fr,auto] relative bg-[url('/images/bg.jpg')] bg-no-repeat">
@@ -53,21 +71,21 @@ export default function Component({ user }: IProps) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context)
-  if(!session) {
+  if (!session) {
     return {
       props: {
-        session
-      }
+        session,
+      },
     }
   }
   const user = await prisma.user.findUnique({
-    where: { email: session?.user?.email?.toString()},
+    where: { email: session?.user?.email?.toString() },
   })
 
   return {
     props: {
       session,
-      user:objectified(user),
+      user: objectified(user),
     },
   }
 }
