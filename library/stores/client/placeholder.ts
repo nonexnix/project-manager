@@ -4,6 +4,7 @@ const placeholder: { user: IUser; member: IMember; project: IProject; task:ITask
   user: {
     id: '',
     email: '',
+    name:'',
     username: '',
     firstName: '',
     lastName: '',

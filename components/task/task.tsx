@@ -112,7 +112,7 @@ const Task = ({ task, index, userId, memberId }: IProps) => {
             </div>
 
             {/* completeness */}
-            {String(phase(Date.now(), 'LL')) >
+            {String(phase(new Date(), 'LL')) >
             String(phase(task?.dueAt, 'LL')) ? (
               <h1 className="text-red-600 font-bold tracking-wide">Overdue</h1>
             ) : (

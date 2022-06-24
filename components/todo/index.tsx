@@ -126,7 +126,7 @@ const Todo = ({ todo, index }: IProps) => {
             </div>
 
             {/* todo Completeness */}
-            {String(phase(Date.now(), 'LL')) >
+            {String(phase(new Date(), 'LL')) >
             String(phase(todo?.dueAt, 'LL')) ? (
               <h1 className="text-red-600 font-bold tracking-wide">Overdue</h1>
             ) : (
