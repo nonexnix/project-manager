@@ -39,11 +39,7 @@ const Home: NextPage<IProps> = ({ initialUser, initialProjects }) => {
   return (
     <Foundation title="Home">
       <Layout>
-        <Header
-          firstName={user.firstName[0].toUpperCase() + user.firstName.slice(1)}
-          lastName={user.lastName[0].toUpperCase() + user.lastName.slice(1)}
-          id={user.id}
-        />
+        <Header fullname={user.name} image={user.image} id={user.id} />
         <Main>
           <section>
             {/* Search , Buttons */}
@@ -67,7 +63,12 @@ const Home: NextPage<IProps> = ({ initialUser, initialProjects }) => {
                         color={'bg-blue'}
                         handler={() => setIsJoin(!isJoin)}
                       />
-                      {isJoin && <JoinProjectModal projects={initialProjects} handler={() => setIsJoin(!isJoin)}/>}
+                      {isJoin && (
+                        <JoinProjectModal
+                          projects={initialProjects}
+                          handler={() => setIsJoin(!isJoin)}
+                        />
+                      )}
 
                       <Button
                         name={'Create New Project'}
@@ -103,7 +104,7 @@ const Home: NextPage<IProps> = ({ initialUser, initialProjects }) => {
                       return member.active === true
                     })
                     .map((member) => (
-                      <Project key={member?.id} member={member}/>
+                      <Project key={member?.id} member={member} />
                     ))}
               </div>
             </div>
@@ -162,7 +163,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       initialUser: objectified(user),
-      initialProjects: objectified(projects)
+      initialProjects: objectified(projects),
     },
     revalidate: 1,
   }
